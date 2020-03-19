@@ -169,7 +169,7 @@ export const BlueGradientBackground = styled(motion.div)`
 	}
 `;
 export const BlackGradientBackground = styled(motion.div)`
-    background-image: linear-gradient(180deg, #434343 0%, ${theme.colors.black} 100%);
+    background-image: ${props => props.invert ? `linear-gradient(180deg, ${theme.colors.black} 0%, #434343 100%)` : `linear-gradient(180deg, #434343 0%, ${theme.colors.black} 100%)`};
     position: fixed;
     z-index: 0;
     width: 100%;
