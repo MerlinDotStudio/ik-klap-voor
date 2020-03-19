@@ -5,11 +5,9 @@ import styled from '@emotion/styled';
 import {
     HeaderHamburgerMenu,
 } from './_Components';
+import { HasNotification } from '../../pages';
 
 const Header = props => {
-    const {
-        t,
-    } = props;
 
     const Header = styled.header`
         border-radius: 0 0 .5rem .5rem;
@@ -34,27 +32,20 @@ const Header = props => {
             .logo {
                 height: 1.25rem;
             }
-            h1 {
-                font-size: 1.2rem;
-            }
         }
     `;
 
     const LogoTitle = styled.h1`
-        color: transparent;
         position: relative;
         margin: 0;
-        font-size: 1.85rem;
-
-        @media ${mq.max.medium} {
-            font-size: 1.2rem;
-        }
+        font-size: calc(3.125rem + 1vh);
+        top: 1rem;
     `;
 
     const Nav = styled.nav`
         height: 4rem;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
 
@@ -80,11 +71,12 @@ const Header = props => {
     return (
         <Header>
             <Nav>
-                <div>
-
-                </div>
+                <LogoTitle>
+					<HasNotification>123</HasNotification>
+					👏
+                </LogoTitle>
                 <div className={'header-holder'}>
-					<HeaderHamburgerMenu t={t} />
+					<HeaderHamburgerMenu />
                 </div>
             </Nav>
         </Header>

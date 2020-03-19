@@ -8,10 +8,14 @@ import { theme } from '../../../styles/global';
 import { css } from '@emotion/core';
 import Link from 'next/link';
 import { HeaderLanguageSelector } from '../_Components';
+import { HasNotification } from '../../../pages';
 
 const HeaderHamburgerMenu = props => {
-    const { t } = props;
     const [menuOpen, toggleMenuOpen] = useState(false);
+
+	useKeyPress('Escape', () => {
+		if(menuOpen) toggleMenu('close')
+	});
 
     function toggleMenu(state) {
         if (state && state === 'close' && menuOpen) {
@@ -38,8 +42,6 @@ const HeaderHamburgerMenu = props => {
         box-shadow: -10px 10px 10px 0px rgba(0,0,0,.16);
     `;
 
-    useKeyPress('Escape', () => toggleMenu('close'));
-
     const Button = styled.button`
         -webkit-appearance: none;
         border: 0;
@@ -54,6 +56,9 @@ const HeaderHamburgerMenu = props => {
     const List = styled(motion.ul)`
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: flex-end;
     `;
     const container = {
         hidden: { opacity: 0 },
@@ -61,8 +66,8 @@ const HeaderHamburgerMenu = props => {
             opacity: 1,
             transition: {
                 staggerChildren: 0.1,
-                delay: 0.125,
-                duration: 0.2,
+                delay: 0.2,
+                duration: 0.35,
                 delayChildren: 0.25,
             },
         },
@@ -76,23 +81,23 @@ const HeaderHamburgerMenu = props => {
     const links = [
         {
             text: '👏 Applaudisseer',
-            href: '/',
+            href: '/applaudisseer',
         },
         {
             text: '💌 Stuur een bericht',
-            href: '/residences',
+            href: '/bericht',
         },
         {
             text: '❤️ Bekijk alle steun',
-            href: '/',
+            href: '/alle-steun',
         },
         {
             text: '🤷 Over het initiatief',
-            href: '/login',
+            href: '/over-het-initiatief',
         },
 		{
             text: '💡 Ook een tof idee?',
-            href: '/login',
+            href: '/suggestie',
         },
     ];
 
@@ -102,22 +107,27 @@ const HeaderHamburgerMenu = props => {
         font-weight: bold;
         margin-bottom: calc(1.5rem + 5%);
         text-align: right;
+        position:relative;
+        display: inline-block;
+        width: fit-content;
 
         &::first-letter {
             text-transform: capitalize;
         }
 
+		> div {
+			right: auto;
+			left: -1.75rem;
+			top: -0.25rem;
+			z-index: 1;
+		}
+
         a {
         	display: inline-block;
             color: ${theme.colors.black};
-			transition: transform 150ms ease-out;
 
             &::first-letter {
                 text-transform: capitalize;
-            }
-
-            &:hover, &:focus {
-            	transform: scale(1.05) skew(2deg);
             }
         }
     `;
@@ -187,7 +197,13 @@ const HeaderHamburgerMenu = props => {
 								animate="show"
 							>
 								{links.map((link, i) => (
-									<StyledLink key={`${i}`} variants={item}>
+									<StyledLink key={`${i}`} variants={item} whileHover={{
+										scale: 1.05,
+										rotate: '-1deg',
+										transition: { duration: .25 },
+									}} whileTap={{ scale: 0.9 }}>
+										{i === 0 ? <HasNotification>123</HasNotification> : null}
+										{i === 1 ? <HasNotification>2</HasNotification> : null}
 										<Link href={link.href}>{link.text}</Link>
 									</StyledLink>
 								))}

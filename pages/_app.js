@@ -4,10 +4,11 @@ import { Global, css } from '@emotion/core';
 import { theme } from '../styles/global';
 import SEOHead from '../components/SEOHead';
 import { appWithTranslation } from '../i18n';
+import { AnimatePresence } from 'framer-motion';
 
 class MyApp extends App {
     render() {
-        const { Component, pageProps } = this.props;
+		const { Component, pageProps, router } = this.props;
 
         return (
                 <>
@@ -42,53 +43,17 @@ class MyApp extends App {
                                 }
 
                                 body, #__next, main {
-                                	min-height: calc(100vh - 4rem);
+                                	min-height: calc(100vh - 4rem + 1px);
                                 }
 
                                 header + * {
                                 	margin-top: 4rem;
                                 }
-
-                                ::-webkit-scrollbar {
-                                    width: 8px;
-                                    height: 8px;
-                                    transition: all 300ms ease-in-out;
-                                }
-                                ::-webkit-scrollbar-button {
-                                    width: 0;
-                                    height: 0;
-                                    transition: all 300ms ease-in-out;
-                                }
-                                ::-webkit-scrollbar-thumb {
-                                    background: #80D0C7;
-                                    border: 0 none #ffffff;
-                                    border-radius: 0;
-                                    transition: all 300ms ease-in-out;
-                                }
-                                ::-webkit-scrollbar-thumb:hover {
-                                    background: #13547A;
-                                }
-                                ::-webkit-scrollbar-thumb:active {
-                                    background: #13547A;
-                                }
-                                ::-webkit-scrollbar-track {
-                                    background: #13547A;
-                                    border-radius: 0;
-                                    transition: all 300ms ease-in-out;
-                                }
-                                ::-webkit-scrollbar-track:hover {
-                                    background: #80D0C7;
-                                }
-                                ::-webkit-scrollbar-track:active {
-                                    background: #333333;
-                                }
-                                ::-webkit-scrollbar-corner {
-                                    background: transparent;
-                                    transition: all 300ms ease-in-out;
-                                }
                             `}
                     />
-                            <Component {...pageProps} />
+					<AnimatePresence exitBeforeEnter>
+						<Component {...pageProps} key={router.route} />
+					</AnimatePresence>
                 </>
         );
     }

@@ -43,7 +43,6 @@ const SlidingSidebar = props => {
     `;
 
     const focusTrap = useFocusTrap(menuOpen);
-    useKeyPress('Escape', () => toggleMenu('close'));
 
     const Button = styled.button`
         -webkit-appearance: none;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const ButtonStyles = `
     -webkit-appearance: none;
@@ -18,6 +19,8 @@ const ButtonStyles = `
     position: relative;
     white-space: nowrap;
     width: 100%;
+    display: inline-block;
+    text-align: center;
     transition: transform 150ms ease-out, background-color 150ms ease-out;
 
     &[aria-disabled='true'] {
@@ -47,16 +50,17 @@ const ButtonStyles = `
     }
 `;
 
-const ButtonElement = styled.button`
+const ButtonElement = styled(motion.button)`
     ${ButtonStyles}
 `;
 
 export const Button = props => {
 	const { children, ariaDisabled, onClick, styles, type, to, icon } = props;
 
-	const LinkButton = styled.div`
+	const LinkButton = styled(motion.div)`
         a {
             ${ButtonStyles}
+            ${styles ? styles : null}
         }
     `;
 
