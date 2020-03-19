@@ -1,0 +1,48 @@
+{
+  "login": {
+	"login": "Log in",
+	"email": "Email",
+	"name": "Name",
+	"password": "Password",
+	"forgotPassword": "Forgot your password?",
+	"clickHere": "Click here",
+	"noAccount": "I don’t have an account"
+  },
+  "register": {
+	"register": "Register",
+	"accountAlready": "I have an account already"
+  },
+  "forgotPassword": {
+	"title": "Forgot password"
+  },
+  "newPassword": {
+	"title": "Nieuw wachtwoord invullen"
+  },
+  "menu": {
+	"profile": "Profile",
+	"logout": "Log out"
+  },
+  "Login": {
+	"login": "inloggen",
+	"register": "registreren",
+	"forgotPassword": "Wachtwoord vergeten",
+	"signup": "Aanmelden",
+	"loginNow": "nu inloggen",
+	"registerNow": "nu aanmelden",
+	"accountAlready": "Heb je al een account?",
+	"accountAlreadyFalse": "Heb je nog geen account?"
+  },
+  "CallToAction": {
+	"respondToResidence": "Reageren",
+	"readMore": "Lees meer",
+	"readLess": "Lees minder",
+	"next": "Volgende",
+	"previous": "Vorige"
+  },
+  "System": {
+	"acceptTOS": "Akkoord met de algemene voorwaarden",
+	"emailaddress": "E-mail adres",
+	"password": "wachtwoord",
+	"lookAtEverything": "Bekijk alles"
+  }
+}

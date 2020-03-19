@@ -1,0 +1,28 @@
+{
+  "name": "IkKlapVoor",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "format": "prettier --write \"{pages,components}/**/*.js\""
+  },
+  "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "express": "^4.17.1",
+    "framer-motion": "^1.8.4",
+    "moment": "^2.24.0",
+    "next": "9.2.2",
+    "next-fonts": "^1.0.3",
+    "next-i18next": "^4.2.0",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-intersection-observer": "^8.26.1"
+  },
+  "devDependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@emotion/core": "^10.0.22",
+    "prettier": "^1.19.1"
+  }
+}
