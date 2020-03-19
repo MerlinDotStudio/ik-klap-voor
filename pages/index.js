@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { withTranslation } from '../i18n';
 import Header from '../components/Header/Header';
 import FadeIn from '../utils/FadeIn';
 import { theme } from '../styles/global';
@@ -182,11 +181,11 @@ export const BottomPosition = styled.div`
     align-self: flex-end;
 `;
 
-const LoginPage = ({ t }) => {
+const LoginPage = () => {
     return (
         <>
             <BlueGradientBackground />
-            <Header {...{ t }} {...defaultHeaderProps} />
+            <Header {...defaultHeaderProps} />
             <main>
                 <ContentWrapper>
                     <FadeIn>
@@ -199,7 +198,7 @@ const LoginPage = ({ t }) => {
                         <ButtonHolder>
                             <FadeIn delay={0.25}>
                                 <Button
-									icon={'👏'}
+                                    icon={'👏'}
                                     styles={css`
                                         color: #80d0c7;
                                         margin-bottom: 1rem;
@@ -219,9 +218,4 @@ const LoginPage = ({ t }) => {
     );
 };
 
-LoginPage.getInitialProps = async () => ({
-    namespacesRequired: ['common'],
-});
-
-withTranslation('common')(LoginPage);
-export default withTranslation('common')(LoginPage);
+export default LoginPage;
