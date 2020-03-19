@@ -41,6 +41,10 @@ class MyApp extends App {
                                     height: 100%;
                                 }
 
+                                body, #__next, main {
+                                	min-height: calc(100vh - 4rem);
+                                }
+
                                 header + * {
                                 	margin-top: 4rem;
                                 }
@@ -56,24 +60,24 @@ class MyApp extends App {
                                     transition: all 300ms ease-in-out;
                                 }
                                 ::-webkit-scrollbar-thumb {
-                                    background: rgb(215, 18, 33);
+                                    background: #80D0C7;
                                     border: 0 none #ffffff;
                                     border-radius: 0;
                                     transition: all 300ms ease-in-out;
                                 }
                                 ::-webkit-scrollbar-thumb:hover {
-                                    background: #8a0b16;
+                                    background: #13547A;
                                 }
                                 ::-webkit-scrollbar-thumb:active {
-                                    background: #000000;
+                                    background: #13547A;
                                 }
                                 ::-webkit-scrollbar-track {
-                                    background: #cbcbcb;
+                                    background: #13547A;
                                     border-radius: 0;
                                     transition: all 300ms ease-in-out;
                                 }
                                 ::-webkit-scrollbar-track:hover {
-                                    background: #666666;
+                                    background: #80D0C7;
                                 }
                                 ::-webkit-scrollbar-track:active {
                                     background: #333333;

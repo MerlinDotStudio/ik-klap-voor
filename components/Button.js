@@ -8,13 +8,15 @@ const ButtonStyles = `
     border: 0;
     background-color: white;
     color: #13547A;
-    border-radius: 1rem;
+    border-radius: 10rem;
     box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, .16);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
     outline: none;
     cursor: pointer;
-    padding: 1rem;
+    padding: 1rem 3.5rem 1rem 3.5rem;
+    position: relative;
+    white-space: nowrap;
     width: 100%;
     transition: transform 150ms ease-out, background-color 150ms ease-out;
 
@@ -35,6 +37,14 @@ const ButtonStyles = `
         transform: scale(1);
     }
 
+    i {
+    	position: absolute;
+    	left: 1.25rem;
+    	top: 50%;
+    	transform: translateY(-50%);
+    	text-transform: none;
+    	font-style: normal;
+    }
 `;
 
 const ButtonElement = styled.button`
@@ -42,7 +52,7 @@ const ButtonElement = styled.button`
 `;
 
 export const Button = props => {
-	const { children, ariaDisabled, onClick, styles, type, to } = props;
+	const { children, ariaDisabled, onClick, styles, type, to, icon } = props;
 
 	const LinkButton = styled.div`
         a {
@@ -61,6 +71,7 @@ export const Button = props => {
 			onClick={onClick}
 			type={type ? type : 'button'}
 		>
+			{icon ? <i>{icon}</i> : null}
 			{children}
 		</ButtonElement>
 	);

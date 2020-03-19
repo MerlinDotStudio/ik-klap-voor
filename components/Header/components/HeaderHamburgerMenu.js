@@ -97,7 +97,7 @@ const HeaderHamburgerMenu = props => {
     ];
 
     const StyledLink = styled(motion.li)`
-        font-size: calc(1rem + 2vh);
+        font-size: calc(1rem + 1vh);
         white-space: nowrap;
         font-weight: bold;
         margin-bottom: calc(1.5rem + 5%);

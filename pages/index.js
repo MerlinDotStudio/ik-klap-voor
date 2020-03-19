@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { withTranslation } from '../i18n';
 import Header from '../components/Header/Header';
 import FadeIn from '../utils/FadeIn';
 import { theme } from '../styles/global';
+import { Button } from '../components/Button';
+import { css } from '@emotion/core';
 
 // MEES FIREBASE SET UP
 // const db = firebase.firestore()
@@ -44,7 +46,6 @@ import { theme } from '../styles/global';
 // 		console.log('updated', data)
 // 	})
 // })
-
 
 const ContainerForm = styled.form`
     width: 2.75rem;
@@ -88,78 +89,132 @@ const ContainerForm = styled.form`
 `;
 
 export const FabLike = props => {
-	const { id, checked, defaultValue, disabled, name, label, styles } = props;
-	const [clicked, setClicked] = useState(false);
+    const { id, checked, defaultValue, disabled, name, label, styles } = props;
+    const [clicked, setClicked] = useState(false);
 
-	const handleOnChange = event => {
-		const { onChange } = this.props;
-		const newChecked = event.target.checked;
+    const handleOnChange = event => {
+        const { onChange } = this.props;
+        const newChecked = event.target.checked;
 
-		if (onChange) {
-			onChange(newChecked);
-		}
-	};
+        if (onChange) {
+            onChange(newChecked);
+        }
+    };
 
-	function animateHeart(e) {
-		e.preventDefault();
-		setClicked(!clicked);
-	}
+    function animateHeart(e) {
+        e.preventDefault();
+        setClicked(!clicked);
+    }
 
-	return (
-		<ContainerForm action="" onSubmit={e => animateHeart(e)} css={styles ? styles : undefined}>
-			<input type="hidden" value={id} name={'id'} />
-			<button type={'submit'} aria-label={'Like'}><span style={{position: 'absolute', opacity: '0', pointerEvents: 'none'}}>Like</span></button>
-			<div className={'icon'}>
-				{/*<Heart animationClassName={clicked ? 'clicked' : null} />*/}
-				icon hier
-			</div>
-			{label}
-		</ContainerForm>
-	);
+    return (
+        <ContainerForm action="" onSubmit={e => animateHeart(e)} css={styles ? styles : undefined}>
+            <input type="hidden" value={id} name={'id'} />
+            <button type={'submit'} aria-label={'Like'}>
+                <span style={{ position: 'absolute', opacity: '0', pointerEvents: 'none' }}>Like</span>
+            </button>
+            <div className={'icon'}>
+                {/*<Heart animationClassName={clicked ? 'clicked' : null} />*/}
+                icon hier
+            </div>
+            {label}
+        </ContainerForm>
+    );
 };
-
 
 const BlueGradientBackground = styled.div`
-	background-image: linear-gradient(0deg, ${theme.colors.darkBlue} 0%, ${theme.colors.lightBlue} 100%);
-	position: fixed;
-	z-index: -1;
-	width: 100vw;
-	height: 100vh;
-	left: 0;
-	top: 0;
-	pointer-events: none;
-`
+    background-image: linear-gradient(0deg, ${theme.colors.darkBlue} 0%, ${theme.colors.lightBlue} 100%);
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+`;
 const BlackGradientBackground = styled.div`
-	background-image: linear-gradient(0deg, ${theme.colors.black} 0%, ${theme.colors.grey} 100%);
-	position: fixed;
-	z-index: -1;
-	width: 100vw;
-	height: 100vh;
-	left: 0;
-	top: 0;
-	pointer-events: none;
-`
+    background-image: linear-gradient(0deg, ${theme.colors.black} 0%, ${theme.colors.grey} 100%);
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+`;
 export const defaultHeaderProps = {
-	languageSelector: false,
-	registerLink: false,
-	loginLink: false,
-	loginSidebar: false,
-	loggedIn: false,
-	chat: false,
-	hasChatNotification: false,
-	hasProfileNotification: false,
+    languageSelector: false,
+    registerLink: false,
+    loginLink: false,
+    loginSidebar: false,
+    loggedIn: false,
+    chat: false,
+    hasChatNotification: false,
+    hasProfileNotification: false,
 };
+
+export const BigText = styled.p`
+    font-size: 1.875rem;
+    color: white;
+    max-width: 40rem;
+    strong {
+        font-weight: bold;
+    }
+`;
+
+export const ContentWrapper = styled.article`
+    margin: 0 auto;
+    padding: 5% 10%;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-content: space-between;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 4rem);
+`;
+
+export const ButtonHolder = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+`;
+
+export const BottomPosition = styled.div`
+    align-self: flex-end;
+`;
 
 const LoginPage = ({ t }) => {
     return (
         <>
-			<BlueGradientBackground />
-			<Header {...{t}} {...defaultHeaderProps} />
-			<main>
-				<FadeIn>
-					<p>Geef steun aan de eerste linie Corona bestrijders en de andere helden die ons land draaiend houden. </p>
-				</FadeIn>
-			</main>
+            <BlueGradientBackground />
+            <Header {...{ t }} {...defaultHeaderProps} />
+            <main>
+                <ContentWrapper>
+                    <FadeIn>
+                        <BigText>
+                            Geef <strong>steun</strong> aan de eerste linie <strong>Corona bestrijders</strong> en de{' '}
+                            <strong>andere helden</strong> die ons land draaiend houden.
+                        </BigText>
+                    </FadeIn>
+                    <BottomPosition>
+                        <ButtonHolder>
+                            <FadeIn delay={0.25}>
+                                <Button
+									icon={'👏'}
+                                    styles={css`
+                                        color: #80d0c7;
+                                        margin-bottom: 1rem;
+                                    `}
+                                >
+                                    Applaudisseer
+                                </Button>
+                            </FadeIn>
+                            <FadeIn delay={0.5}>
+                                <Button icon={'💌'}>Stuur een bericht</Button>
+                            </FadeIn>
+                        </ButtonHolder>
+                    </BottomPosition>
+                </ContentWrapper>
+            </main>
         </>
     );
 };
