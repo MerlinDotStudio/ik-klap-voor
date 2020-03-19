@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { withTranslation } from 'react-i18next';
-import { i18n } from '../../../i18n';
 import styled from '@emotion/styled';
 import { theme } from '../../../styles/global';
 import { motion } from 'framer-motion';

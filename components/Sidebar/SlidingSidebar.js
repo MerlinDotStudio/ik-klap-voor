@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import useKeyPress from '../../utils/useKeypress';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -7,7 +6,6 @@ import { theme } from '../../styles/global';
 import { css } from '@emotion/core';
 import Arrow from '../../public/icons/Arrow';
 import useFocusTrap from '@charlietango/use-focus-trap';
-import { WithTranslation } from 'next-i18next';
 
 const SlidingSidebar = props => {
     const { children, buttonText } = props;
@@ -141,4 +139,4 @@ const SlidingSidebar = props => {
     );
 };
 
-export default withTranslation('common')(SlidingSidebar);
+export default SlidingSidebar;

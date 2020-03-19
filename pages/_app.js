@@ -3,7 +3,6 @@ import App from 'next/app';
 import { Global, css } from '@emotion/core';
 import { theme } from '../styles/global';
 import SEOHead from '../components/SEOHead';
-import { appWithTranslation } from '../i18n';
 import { AnimatePresence } from 'framer-motion';
 
 class MyApp extends App {
@@ -59,4 +58,4 @@ class MyApp extends App {
     }
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;

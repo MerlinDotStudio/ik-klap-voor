@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withTranslation } from 'react-i18next';
 import HamburgerIcon from '../../../public/icons/Hamburger';
 import styled from '@emotion/styled';
 import useKeyPress from '../../../utils/useKeypress';
@@ -225,4 +224,4 @@ const HeaderHamburgerMenu = props => {
     );
 };
 
-export default withTranslation('common')(HeaderHamburgerMenu);
+export default HeaderHamburgerMenu;

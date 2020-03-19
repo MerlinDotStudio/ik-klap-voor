@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { withTranslation } from '../i18n';
 import Header from '../components/Header/Header';
-import FadeIn from '../utils/FadeIn';
 import { theme } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
@@ -253,7 +251,6 @@ export const BigText = styled(motion.div)`
 export const ContentWrapper = styled(motion.article)`
     margin: 0 auto;
     padding: 5% 10%;
-
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
@@ -286,12 +283,12 @@ export const HasNotification = styled.div`
     font-size: 0.75rem;
 `;
 
-let easing = [0.175, 0.85, 0.42, 0.96];
 export const staggerTransition = {
 	staggerChildren: .75,
 	duration: .85,
 	delayChildren: 0.5,
 };
+
 export const textVariants = {
     exit: {
         y: 20,
@@ -310,10 +307,10 @@ export const fade = {
     enter: { opacity: 1 },
 };
 
-const LoginPage = ({ t }) => {
+const HomePage = () => {
     return (
         <BlueGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
-            <Header {...{ t }} {...defaultHeaderProps} />
+            <Header {...defaultHeaderProps} />
             <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
                 <main>
                     <ContentWrapper variants={textVariants}>
@@ -348,9 +345,4 @@ const LoginPage = ({ t }) => {
     );
 };
 
-LoginPage.getInitialProps = async () => ({
-    namespacesRequired: ['common'],
-});
-
-withTranslation('common')(LoginPage);
-export default withTranslation('common')(LoginPage);
+export default HomePage
