@@ -68,7 +68,7 @@ export default props => {
             </script>
 
             <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-132349720-7" />
-                <script dangerouslySetInnerHTML={{__html:`
+			<script dangerouslySetInnerHTML={{__html:`
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
@@ -76,6 +76,6 @@ export default props => {
 				gtag('config', 'UA-132349720-7');
 				gtag('config', 'UA-132349720-7', {'anonymize_ip': true});
 			`}}/>
-        </Head>
+		</Head>
     );
 };

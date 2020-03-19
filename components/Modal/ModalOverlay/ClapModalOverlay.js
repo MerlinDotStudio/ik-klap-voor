@@ -4,15 +4,16 @@ import { motion } from 'framer-motion';
 import CloseModalButton from './components/CloseModalButton';
 import { useRouter } from 'next/router';
 import { staggerTransition } from '../../../pages';
+import CloseClapModalButton from './components/CloseClapModalButton';
 
-export const ModalOverlayContext = React.createContext(undefined);
+export const ClapModalOverlayContext = React.createContext(undefined);
 
 // create the provider
-export const ModalOverlayContextProvider = props => {
+export const ClapModalOverlayContextProvider = props => {
     const [modalOpenState, setModalOpenState] = useState(true);
 
     return (
-        <ModalOverlayContext.Provider
+        <ClapModalOverlayContext.Provider
             value={{
                 isOpen: modalOpenState,
                 toggleModal: () => {
@@ -26,7 +27,7 @@ export const ModalOverlayContextProvider = props => {
             }}
         >
             {props.children}
-        </ModalOverlayContext.Provider>
+        </ClapModalOverlayContext.Provider>
     );
 };
 
@@ -34,47 +35,42 @@ export default ({ children, dark = false, closeAsText = false }) => {
     const {
         query: { registered },
     } = useRouter();
-    const useModalOverlayContext = useContext(ModalOverlayContext);
+    const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
     const darkVersion = dark;
 
     useEffect(() => {
         // Only show model if registered query is true
-        useModalOverlayContext.stateChangeHandler(registered === 'true');
+        useClapModalOverlayContext.stateChangeHandler(registered === 'true');
     }, [registered]);
-
-	const ModalTransition = staggerTransition
-	ModalTransition.duration = .5
-	ModalTransition.staggerChildren = .25
-	ModalTransition.delayChildren = .25
 
     return (
         <>
             <ModalOverlay>
                 <motion.div
-                    aria-expanded={useModalOverlayContext.isOpen}
+                    aria-expanded={useClapModalOverlayContext.isOpen}
                     className={`modal-box`}
                     css={ModalBoxCSS({ dark: darkVersion })}
                     initial={{
                         opacity: 0,
                     }}
                     animate={{
-                        opacity: useModalOverlayContext.isOpen ? 1 : 0,
-                        pointerEvents: useModalOverlayContext.isOpen ? 'auto' : 'none',
+                        opacity: useClapModalOverlayContext.isOpen ? 1 : 0,
+                        pointerEvents: useClapModalOverlayContext.isOpen ? 'auto' : 'none',
                     }}
-                    transition={ModalTransition}
+                    transition={staggerTransition}
                 >
-                    <CloseModalButton whiteOnBlack={darkVersion} closeAsText={closeAsText} />
-                    {useModalOverlayContext.isOpen && children}
+                    <CloseClapModalButton whiteOnBlack={darkVersion} closeAsText={closeAsText} />
+                    {useClapModalOverlayContext.isOpen && children}
                 </motion.div>
             </ModalOverlay>
 
             <motion.div
                 css={ModalBoxGradientCSS({ dark: darkVersion })}
-                onClick={() => useModalOverlayContext.stateChangeHandler(false)}
+                onClick={() => useClapModalOverlayContext.stateChangeHandler(false)}
                 initial={{ opacity: 0, pointerEvents: 'none' }}
                 animate={{
-                    opacity: useModalOverlayContext.isOpen ? 1 : 0,
-                    pointerEvents: useModalOverlayContext.isOpen ? 'auto' : 'none',
+                    opacity: useClapModalOverlayContext.isOpen ? 1 : 0,
+                    pointerEvents: useClapModalOverlayContext.isOpen ? 'auto' : 'none',
                 }}
                 transition={{ duration: 0.25 }}
             >

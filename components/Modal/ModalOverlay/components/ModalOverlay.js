@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { mq } from '../../../../styles/global';
 
-// noinspection CssUnknownProperty
+
 const ModalOverlay = styled.section`
     width: 100%;
     height: 100%;

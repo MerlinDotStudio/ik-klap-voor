@@ -3,7 +3,6 @@ import { ModalOverlayContext } from '../ModalOverlay';
 import styled from '@emotion/styled';
 import { theme } from '../../../../styles/global';
 
-// noinspection CssUnknownProperty,CssInvalidPropertyValue
 const Button = styled.button`
     width: 10rem;
     height: 3rem;

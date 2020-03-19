@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 
-// noinspection CssUnknownProperty
+
 const ModalBoxGradientCSS = props => css`
     background: ${props.dark
         ? 'radial-gradient( circle at center,rgba(0,0,0,0.8) 0,rgba(0,0,0,0.9) 100% )'

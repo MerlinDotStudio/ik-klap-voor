@@ -66,7 +66,12 @@ export const Button = props => {
 
 	return to ? (
 		<LinkButton>
-			<Link href={to}>{children}</Link>
+			<Link href={to}>
+				<a>
+					{icon ? <i>{icon}</i> : null}
+					{children}
+				</a>
+			</Link>
 		</LinkButton>
 	) : (
 		<ButtonElement

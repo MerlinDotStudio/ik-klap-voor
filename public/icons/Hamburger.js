@@ -18,7 +18,7 @@ const HamburgerIcon = props => {
 					}}
 					animate={{
 						fill: closed ? '#383C3F' : '#FFF',
-						rotate: !closed ? '0' : '45deg',
+						rotate: !closed ? '0deg' : '45deg',
 						y: !closed ? '0' : '3px',
 						scale: !closed ? 1 : 0.8,
 					}}
@@ -29,7 +29,7 @@ const HamburgerIcon = props => {
 					}}
 					animate={{
 						fill: closed ? '#383C3F' : '#FFF',
-						rotate: !closed ? '0' : '-45deg',
+						rotate: !closed ? '0deg' : '-45deg',
 						y: !closed ? '7px' : '3px',
 						scale: !closed ? 1 : 0.8,
 					}}

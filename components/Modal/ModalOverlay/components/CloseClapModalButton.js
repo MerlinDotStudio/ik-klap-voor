@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ModalOverlayContext } from '../ModalOverlay';
+import { ClapModalOverlayContext } from '../ClapModalOverlay';
 import { mq, theme } from '../../../../styles/global';
 import styled from '@emotion/styled';
 import CloseIcon from '../../../../public/icon/Close';
@@ -72,7 +72,7 @@ const Button = styled.button`
 
 export default props => {
     const { whiteOnBlack, closeAsText } = props;
-    const useModalOverlayContext = useContext(ModalOverlayContext);
+    const useModalOverlayContext = useContext(ClapModalOverlayContext);
 
     return (
         <Button

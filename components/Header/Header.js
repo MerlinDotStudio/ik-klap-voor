@@ -15,7 +15,7 @@ const Header = props => {
         top: 0;
         left: 0;
         width: 100vw;
-        z-index: 9;
+        z-index: 2;
 
         li {
             list-style-type: none;

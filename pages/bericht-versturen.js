@@ -84,7 +84,7 @@ const ApplaudPage = () => {
 							</InputWithIcon>
 							<textarea name="message" id="message" cols="30" rows="10"
 									  css={InputStyle}
-									  placeholder={'Uw volledige naam'}
+									  placeholder={'Ik heb een goed idee / Ik vul graag de branches bij met'}
 									  required={true}
 							/>
 						<BottomPosition>

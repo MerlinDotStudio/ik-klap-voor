@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header/Header';
 import { theme } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
+import OpenModalButton from '../components/Modal/ModalOverlay/components/OpenModalButton';
+import Modal, { ModalOverlayContext, ModalOverlayContextProvider } from '../components/Modal/ModalOverlay/ModalOverlay';
+import {
+    FacebookIcon,
+    FacebookShareButton,
+    LinkedinIcon,
+    LinkedinShareButton,
+    TwitterIcon,
+    TwitterShareButton,
+    WhatsappIcon,
+    WhatsappShareButton,
+} from 'react-share';
+import ApplaudModal from '../components/Modal/ApplaudModal';
+import {
+	ClapModalOverlayContext,
+	ClapModalOverlayContextProvider,
+} from '../components/Modal/ModalOverlay/ClapModalOverlay';
+import ClapModal from '../components/Modal/ClapModal';
 
 // MEES FIREBASE SET UP
 // const db = firebase.firestore()
@@ -131,45 +149,48 @@ export const BlueGradientBackground = styled(motion.div)`
     overflow-y: auto;
     padding-bottom: 4rem;
     &::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-button {
-		width: 0;
-		height: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-thumb {
-		background: #80D0C7;
-		border: 0 none #ffffff;
-		border-radius: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-thumb:hover {
-		background: #13547A;
-	}
-	&::-webkit-scrollbar-thumb:active {
-		background: #13547A;
-	}
-	&::-webkit-scrollbar-track {
-		background: #13547A;
-		border-radius: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-track:hover {
-		background: #80D0C7;
-	}
-	&::-webkit-scrollbar-track:active {
-		background: #333333;
-	}
-	&::-webkit-scrollbar-corner {
-		background: transparent;
-		transition: all 300ms ease-in-out;
-	}
+        width: 8px;
+        height: 8px;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #80d0c7;
+        border: 0 none #ffffff;
+        border-radius: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #13547a;
+    }
+    &::-webkit-scrollbar-thumb:active {
+        background: #13547a;
+    }
+    &::-webkit-scrollbar-track {
+        background: #13547a;
+        border-radius: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-track:hover {
+        background: #80d0c7;
+    }
+    &::-webkit-scrollbar-track:active {
+        background: #333333;
+    }
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+        transition: all 300ms ease-in-out;
+    }
 `;
 export const BlackGradientBackground = styled(motion.div)`
-    background-image: ${props => props.invert ? `linear-gradient(180deg, ${theme.colors.black} 0%, #434343 100%)` : `linear-gradient(180deg, #434343 0%, ${theme.colors.black} 100%)`};
+    background-image: ${props =>
+        props.invert
+            ? `linear-gradient(180deg, ${theme.colors.black} 0%, #434343 100%)`
+            : `linear-gradient(180deg, #434343 0%, ${theme.colors.black} 100%)`};
     position: fixed;
     z-index: 0;
     width: 100%;
@@ -179,42 +200,42 @@ export const BlackGradientBackground = styled(motion.div)`
     overflow-y: auto;
     padding-bottom: 4rem;
     &::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-button {
-		width: 0;
-		height: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-thumb {
-		background: #434343;
-		border: 0 none #ffffff;
-		border-radius: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-thumb:hover {
-		background: ${theme.colors.black};
-	}
-	&::-webkit-scrollbar-thumb:active {
-		background: ${theme.colors.black};
-	}
-	&::-webkit-scrollbar-track {
-		background: ${theme.colors.black};
-		border-radius: 0;
-		transition: all 300ms ease-in-out;
-	}
-	&::-webkit-scrollbar-track:hover {
-		background: #434343;
-	}
-	&::-webkit-scrollbar-track:active {
-		background: #333333;
-	}
-	&::-webkit-scrollbar-corner {
-		background: transparent;
-		transition: all 300ms ease-in-out;
-	}
+        width: 8px;
+        height: 8px;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #434343;
+        border: 0 none #ffffff;
+        border-radius: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: ${theme.colors.black};
+    }
+    &::-webkit-scrollbar-thumb:active {
+        background: ${theme.colors.black};
+    }
+    &::-webkit-scrollbar-track {
+        background: ${theme.colors.black};
+        border-radius: 0;
+        transition: all 300ms ease-in-out;
+    }
+    &::-webkit-scrollbar-track:hover {
+        background: #434343;
+    }
+    &::-webkit-scrollbar-track:active {
+        background: #333333;
+    }
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+        transition: all 300ms ease-in-out;
+    }
 `;
 export const defaultHeaderProps = {
     languageSelector: false,
@@ -236,15 +257,15 @@ export const BigText = styled(motion.div)`
         font-weight: bold;
     }
     p {
-    	margin: 0 auto calc(1.875rem + 1vh);
+        margin: 0 auto calc(1.875rem + 1vh);
     }
     a {
-		color: white;
-		text-decoration: none;
-		border-bottom: 1px solid white;
+        color: white;
+        text-decoration: none;
+        border-bottom: 1px solid white;
     }
     footer {
-    	font-size: calc(1.5rem + 1vh);
+        font-size: calc(1.5rem + 1vh);
     }
 `;
 
@@ -284,9 +305,9 @@ export const HasNotification = styled.div`
 `;
 
 export const staggerTransition = {
-	staggerChildren: .75,
-	duration: .85,
-	delayChildren: 0.5,
+    staggerChildren: 0.75,
+    duration: 0.85,
+    delayChildren: 0.5,
 };
 
 export const textVariants = {
@@ -311,38 +332,56 @@ const HomePage = () => {
     return (
         <BlueGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
             <Header {...defaultHeaderProps} />
-            <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
-                <main>
-                    <ContentWrapper variants={textVariants}>
-                        <BigText variants={textVariants}>
-                            <div>
-                                <p>Geef <strong>steun</strong> aan de eerste linie <strong>Corona bestrijders</strong> en
-									de <strong>andere helden</strong> die ons land draaiend houden.</p>
-                            </div>
-                        </BigText>
-                        <BottomPosition>
-                            <ButtonHolder variants={textVariants}>
-                                <Button
-                                    icon={'👏'}
-                                    styles={css`
-                                        color: #80d0c7;
-                                        margin-bottom: 1rem;
-                                    `}
-                                    key={1}
-                                    to={'/over-het-initiatief'}
-                                >
-                                    Applaudisseer
-                                </Button>
-                                <Button key={2} icon={'💌'}>
-                                    Stuur een bericht
-                                </Button>
-                            </ButtonHolder>
-                        </BottomPosition>
-                    </ContentWrapper>
-                </main>
-            </motion.div>
+            <ModalOverlayContextProvider>
+                <ClapModalOverlayContextProvider>
+                    <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
+                        <main>
+                            <ContentWrapper variants={textVariants}>
+                                <BigText variants={textVariants}>
+                                    <div>
+                                        <p>
+                                            Geef <strong>steun</strong> aan de eerste linie{' '}
+                                            <strong>Corona bestrijders</strong> en de <strong>andere helden</strong> die
+                                            ons land draaiend houden.
+                                        </p>
+                                    </div>
+                                </BigText>
+                                <ActionButtons/>
+                            </ContentWrapper>
+                        </main>
+                    </motion.div>
+                    <ApplaudModal />
+                    <ClapModal />
+                </ClapModalOverlayContextProvider>
+            </ModalOverlayContextProvider>
         </BlueGradientBackground>
     );
 };
 
-export default HomePage
+const ActionButtons = () => {
+	const useModalOverlayContext = useContext(ModalOverlayContext);
+	const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
+
+	return (
+		<BottomPosition>
+			<ButtonHolder variants={textVariants}>
+				<Button
+					icon={'👏'}
+					styles={css`
+                                                color: #80d0c7;
+                                                margin-bottom: 1rem;
+                                            `}
+					key={1}
+					onClick={() => useModalOverlayContext.stateChangeHandler(true)}
+				>
+					Applaudisseer
+				</Button>
+				<Button key={2} icon={'💌'} onClick={() => useClapModalOverlayContext.stateChangeHandler(true)}>
+					Stuur een bericht
+				</Button>
+			</ButtonHolder>
+		</BottomPosition>
+	)
+}
+
+export default HomePage;

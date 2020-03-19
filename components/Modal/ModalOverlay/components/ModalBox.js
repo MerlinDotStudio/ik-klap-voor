@@ -1,16 +1,13 @@
 import { css } from '@emotion/core';
 import { mq, theme } from '../../../../styles/global';
 
-// noinspection CssUnknownProperty,CssInvalidPropertyValue
 const ModalBoxCSS = props => css`
-    background-color: ${theme.colors.primary};
+	background-color: rgba(55,55,55,.5);
+    backdrop-filter: blur(6px);
     color: white;
-    border-radius: 1rem;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
 
-    width: ${props.dark ? '100%' : '90%'};
-    max-width: ${props.dark ? 'unset' : '50rem'};
-    max-height: ${props.dark ? 'unset' : '40rem'};
+    width: 100%;
+    height: 100%;
 
     display: flex;
     justify-content: center;
@@ -22,7 +19,6 @@ const ModalBoxCSS = props => css`
     overflow: hidden;
 
     pointer-events: auto;
-    transform: scale(0);
     transform-origin: center;
     opacity: 0;
     will-change: transform, opacity;
