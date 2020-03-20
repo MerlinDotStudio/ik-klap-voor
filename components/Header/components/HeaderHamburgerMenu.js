@@ -202,7 +202,7 @@ const HeaderHamburgerMenu = props => {
 								animate="show"
 							>
 								{links.map((link, i) => (
-									<StyledLink onClick={()=>toggleMenu()} key={`${i}`} variants={item} whileHover={{
+									<StyledLink onClick={()=>toggleMenu('close')} key={`${i}`} variants={item} whileHover={{
 										scale: 1.05,
 										rotate: '-1deg',
 										transition: { duration: .25 },
