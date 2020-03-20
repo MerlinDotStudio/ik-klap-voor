@@ -5,24 +5,20 @@ import { theme } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
-import OpenModalButton from '../components/Modal/ModalOverlay/components/OpenModalButton';
-import Modal, { ModalOverlayContext, ModalOverlayContextProvider } from '../components/Modal/ModalOverlay/ModalOverlay';
-import {
-    FacebookIcon,
-    FacebookShareButton,
-    LinkedinIcon,
-    LinkedinShareButton,
-    TwitterIcon,
-    TwitterShareButton,
-    WhatsappIcon,
-    WhatsappShareButton,
-} from 'react-share';
-import ApplaudModal from '../components/Modal/ApplaudModal';
-import {
-    ClapModalOverlayContext,
-    ClapModalOverlayContextProvider,
-} from '../components/Modal/ModalOverlay/ClapModalOverlay';
-import ClapModal from '../components/Modal/ClapModal';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/analytics';
+
+export const firebaseConfig = {
+	apiKey: process.env.apiKey
+	authDomain: process.env.authDomain
+	databaseURL: process.env.databaseURL
+	projectId: process.env.projectId
+	storageBucket: process.env.storageBucket
+	messagingSenderId: process.env.messagingSenderId
+	appId: process.env.appId
+	measurementId: process.env.measurementId
+};
 
 // MEES FIREBASE SET UP
 // const db = firebase.firestore()
@@ -366,9 +362,6 @@ const HomePage = () => {
 };
 
 const ActionButtons = () => {
-    const useModalOverlayContext = useContext(ModalOverlayContext);
-    const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
-
     return (
         <BottomPosition>
             <ButtonHolder variants={textVariants}>

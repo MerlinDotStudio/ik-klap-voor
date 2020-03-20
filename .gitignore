@@ -33,3 +33,5 @@ yarn-error.log*
 ../.idea
 
 .now
+next.config.js
+/next.config.js
