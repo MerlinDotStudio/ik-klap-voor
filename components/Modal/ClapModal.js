@@ -43,6 +43,7 @@ const ClapModal = () => (
                 variants={textVariants}
                 css={css`
                     display: flex;
+                    justify-content: center;
                     padding: 0;
                     margin: 0;
                     li {
