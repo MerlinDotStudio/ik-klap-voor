@@ -80,7 +80,7 @@ const SpecialMessage = () => {
                                 </ButtonHolder>
                                 <ButtonHolder variants={textVariants}>
                                     <Link href={'/suggestie'}>
-                                        <a>Oeps, ik mis een branche!</a>
+                                        <a className={'normal-link'}>Oeps, ik mis een branche!</a>
                                     </Link>
                                 </ButtonHolder>
                             </BottomPosition>

@@ -79,6 +79,10 @@ const HeaderHamburgerMenu = props => {
 
     const links = [
         {
+            text: '🏠 Home',
+            href: '/',
+        },
+        {
             text: '👏 Applaudisseer',
             href: '/applaus-voor',
         },
@@ -201,8 +205,8 @@ const HeaderHamburgerMenu = props => {
 										rotate: '-1deg',
 										transition: { duration: .25 },
 									}} whileTap={{ scale: 0.9 }}>
-										{i === 0 ? <HasNotification>123</HasNotification> : null}
-										{i === 1 ? <HasNotification>2</HasNotification> : null}
+										{i === 1 ? <HasNotification>123</HasNotification> : null}
+										{i === 2 ? <HasNotification>2</HasNotification> : null}
 										<Link href={link.href}>{link.text}</Link>
 									</StyledLink>
 								))}

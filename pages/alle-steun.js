@@ -142,7 +142,7 @@ const AllSupport = () => {
                     >
                         Geen resultaten...{' '}
                         <Link href={'/suggestie'}>
-                            <a>Oeps, ik mis een branche!</a>
+                            <a className={'normal-link'}>Oeps, ik mis een branche!</a>
                         </Link>
                     </p>
                 )}

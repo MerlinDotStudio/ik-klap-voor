@@ -39,7 +39,7 @@ const ApplaudPage = () => {
 			<motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
 				<main>
 					<ContentWrapper variants={textVariants}>
-						<BigText variants={textVariants}>
+						<BigText variants={textVariants} css={css`text-align: center;`}>
 							<div>
 								<p>Heb jij een <strong>goed idee</strong> of mis je een <strong>branche/beroep</strong>?</p>
 							</div>

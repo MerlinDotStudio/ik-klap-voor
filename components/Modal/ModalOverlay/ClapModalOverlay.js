@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ModalOverlay, ModalBoxCSS, ModalBoxGradientCSS } from './_Components';
 import { motion } from 'framer-motion';
 import CloseModalButton from './components/CloseModalButton';
-import { useRouter } from 'next/router';
+import Router from 'next/router'
 import { staggerTransition } from '../../../pages';
 import CloseClapModalButton from './components/CloseClapModalButton';
-
+import useKeyPress from '../../../utils/useKeypress';
 export const ClapModalOverlayContext = React.createContext(undefined);
 
 // create the provider
@@ -23,6 +23,7 @@ export const ClapModalOverlayContextProvider = props => {
                 stateChangeHandler: newState => {
                     setModalOpenState(newState);
                     document.body.classList.toggle('has-overlay');
+					if(newState === false) Router.push('/alle-steun')
                 },
             }}
         >
@@ -32,11 +33,19 @@ export const ClapModalOverlayContextProvider = props => {
 };
 
 export default ({ children, dark = false, closeAsText = false }) => {
-
     const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
     const darkVersion = dark;
 
-    return (
+	const ModalTransition = staggerTransition
+	ModalTransition.duration = .5
+	ModalTransition.staggerChildren = .25
+	ModalTransition.delayChildren = .25
+
+	useKeyPress('Escape', () => {
+		if(useClapModalOverlayContext.isOpen) useClapModalOverlayContext.stateChangeHandler(false)
+	});
+
+	return (
         <>
             <ModalOverlay>
                 <motion.div
@@ -50,7 +59,7 @@ export default ({ children, dark = false, closeAsText = false }) => {
                         opacity: useClapModalOverlayContext.isOpen ? 1 : 0,
                         pointerEvents: useClapModalOverlayContext.isOpen ? 'auto' : 'none',
                     }}
-                    transition={staggerTransition}
+                    transition={ModalTransition}
                 >
                     <CloseClapModalButton whiteOnBlack={darkVersion} closeAsText={closeAsText} />
                     {useClapModalOverlayContext.isOpen && children}

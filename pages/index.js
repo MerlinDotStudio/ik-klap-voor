@@ -293,7 +293,7 @@ export const BottomPosition = styled(motion.div)`
     align-self: flex-end;
     text-align: center;
 
-    a {
+    .normal-link {
         color: white;
         border-bottom: 1px solid white;
         text-decoration: none;

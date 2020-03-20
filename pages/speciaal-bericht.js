@@ -113,13 +113,13 @@ const SpecialMessage = () => {
                             <BottomPosition>
                                 <ButtonHolder variants={textVariants}>
                                     {/*Message should be sent to Firebase*/}
-                                    <Button key={2} icon={'💌'} type={'submit'} ariaDisabled={textLength < 8} onClick={()=> useModalOverlayContext.stateChangeHandler(true)}>
+                                    <Button key={2} icon={'💌'} ariaDisabled={textLength < 8} onClick={()=> useModalOverlayContext.stateChangeHandler(true)}>
                                         Plaats jouw bericht
                                     </Button>
                                 </ButtonHolder>
                                 <ButtonHolder variants={textVariants}>
                                     <Link href={'/suggestie'}>
-                                        <a>Oeps, ik mis een branche!</a>
+                                        <a className={'normal-link'}>Oeps, ik mis een branche!</a>
                                     </Link>
                                 </ButtonHolder>
                             </BottomPosition>

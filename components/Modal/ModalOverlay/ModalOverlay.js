@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { ModalOverlay, ModalBoxCSS, ModalBoxGradientCSS } from './_Components';
 import { motion } from 'framer-motion';
 import CloseModalButton from './components/CloseModalButton';
-import { useRouter } from 'next/router';
+import Router from 'next/router'
 import { staggerTransition } from '../../../pages';
+import useKeyPress from '../../../utils/useKeypress';
 
 export const ModalOverlayContext = React.createContext(undefined);
 
@@ -22,7 +23,8 @@ export const ModalOverlayContextProvider = props => {
                 stateChangeHandler: newState => {
                     setModalOpenState(newState);
                     document.body.classList.toggle('has-overlay');
-                },
+					if(newState === false) Router.push('/alle-steun')
+				},
             }}
         >
             {props.children}
@@ -31,7 +33,6 @@ export const ModalOverlayContextProvider = props => {
 };
 
 export default ({ children, dark = false, closeAsText = false }) => {
-
     const useModalOverlayContext = useContext(ModalOverlayContext);
     const darkVersion = dark;
 
@@ -40,7 +41,12 @@ export default ({ children, dark = false, closeAsText = false }) => {
 	ModalTransition.staggerChildren = .25
 	ModalTransition.delayChildren = .25
 
-    return (
+	useKeyPress('Escape', () => {
+		if(useModalOverlayContext.isOpen) useModalOverlayContext.stateChangeHandler(false)
+		Router.push('/alle-steun')
+	});
+
+	return (
         <>
             <ModalOverlay>
                 <motion.div
