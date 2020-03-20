@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emotion/styled": "^10.0.27",
+    "firebase": "^7.12.0",
     "framer-motion": "^1.8.4",
     "moment": "^2.24.0",
     "next": "9.3.1",

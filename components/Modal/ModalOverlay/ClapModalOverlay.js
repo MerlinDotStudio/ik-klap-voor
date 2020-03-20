@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { ModalOverlay, ModalBoxCSS, ModalBoxGradientCSS } from './_Components';
 import { motion } from 'framer-motion';
-import CloseModalButton from './components/CloseModalButton';
-import { useRouter } from 'next/router';
 import { staggerTransition } from '../../../pages';
 import CloseClapModalButton from './components/CloseClapModalButton';
 
@@ -10,7 +8,7 @@ export const ClapModalOverlayContext = React.createContext(undefined);
 
 // create the provider
 export const ClapModalOverlayContextProvider = props => {
-    const [modalOpenState, setModalOpenState] = useState(true);
+    const [modalOpenState, setModalOpenState] = useState(false);
 
     return (
         <ClapModalOverlayContext.Provider
@@ -32,16 +30,8 @@ export const ClapModalOverlayContextProvider = props => {
 };
 
 export default ({ children, dark = false, closeAsText = false }) => {
-    const {
-        query: { registered },
-    } = useRouter();
     const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
     const darkVersion = dark;
-
-    useEffect(() => {
-        // Only show model if registered query is true
-        useClapModalOverlayContext.stateChangeHandler(registered === 'true');
-    }, [registered]);
 
     return (
         <>

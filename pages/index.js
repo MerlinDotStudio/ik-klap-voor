@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header/Header';
-import { theme } from '../styles/global';
+import { theme, mq } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
@@ -19,50 +19,10 @@ import {
 } from 'react-share';
 import ApplaudModal from '../components/Modal/ApplaudModal';
 import {
-	ClapModalOverlayContext,
-	ClapModalOverlayContextProvider,
+    ClapModalOverlayContext,
+    ClapModalOverlayContextProvider,
 } from '../components/Modal/ModalOverlay/ClapModalOverlay';
 import ClapModal from '../components/Modal/ClapModal';
-
-// MEES FIREBASE SET UP
-// const db = firebase.firestore()
-// let user = firebase.auth().currentUser;
-//
-// if (!user) {
-// 	console.log('fu');
-// 	Router.push('/login')
-// }
-//
-// const data = {
-// 	age: 24
-// }
-// console.clear()
-// async function checkIfUserDataAndAddOrUpdate(newData, uid){
-// 	let userRef = db.collection('users').doc(uid);
-// 	const oldData = await userRef.get()
-// 		.then(doc => {
-// 			if (!doc.exists) {
-// 				console.log('No such document!');
-// 				return {}
-// 			} else {
-// 				return doc.data()
-// 			}
-// 		})
-// 		.catch(err => {
-// 			console.log('Error getting document', err);
-// 		});
-// 	console.log(oldData, newData);
-// 	const dataForUser = Object.assign(oldData, newData);
-// 	console.log(dataForUser);
-// 	return await firebase.firestore().collection('users').doc(uid).set(dataForUser)
-// }
-//
-// checkIfUserDataAndAddOrUpdate({saus: 'test', sexPref: 'male', sex: 'female'}, user.uid).then( data => {
-// 	console.log('updated', data)
-// 	checkIfUserDataAndAddOrUpdate({saus: 'test2', sexPref: 'female'}, user.uid).then( data => {
-// 		console.log('updated', data)
-// 	})
-// })
 
 const ContainerForm = styled.form`
     width: 2.75rem;
@@ -147,7 +107,6 @@ export const BlueGradientBackground = styled(motion.div)`
     left: 0;
     top: 0;
     overflow-y: auto;
-    padding-bottom: 4rem;
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -253,6 +212,10 @@ export const BigText = styled(motion.div)`
     color: white;
     max-width: 40rem;
     margin: 2rem auto;
+
+    @media ${mq.min.medium} {
+        max-width: none;
+    }
     strong {
         font-weight: bold;
     }
@@ -271,13 +234,13 @@ export const BigText = styled(motion.div)`
 
 export const ContentWrapper = styled(motion.article)`
     margin: 0 auto;
-    padding: 5% 10%;
+    padding: 3vh 10vw;
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
     justify-content: center;
     width: 100%;
-    min-height: calc(100vh - 4rem);
+    min-height: calc(100vh - 4rem - 6vh);
 `;
 
 export const ButtonHolder = styled(motion.div)`
@@ -346,7 +309,7 @@ const HomePage = () => {
                                         </p>
                                     </div>
                                 </BigText>
-                                <ActionButtons/>
+                                <ActionButtons />
                             </ContentWrapper>
                         </main>
                     </motion.div>
@@ -359,29 +322,29 @@ const HomePage = () => {
 };
 
 const ActionButtons = () => {
-	const useModalOverlayContext = useContext(ModalOverlayContext);
-	const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
+    const useModalOverlayContext = useContext(ModalOverlayContext);
+    const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
 
-	return (
-		<BottomPosition>
-			<ButtonHolder variants={textVariants}>
-				<Button
-					icon={'👏'}
-					styles={css`
-                                                color: #80d0c7;
-                                                margin-bottom: 1rem;
-                                            `}
-					key={1}
-					onClick={() => useModalOverlayContext.stateChangeHandler(true)}
-				>
-					Applaudisseer
-				</Button>
-				<Button key={2} icon={'💌'} onClick={() => useClapModalOverlayContext.stateChangeHandler(true)}>
-					Stuur een bericht
-				</Button>
-			</ButtonHolder>
-		</BottomPosition>
-	)
-}
+    return (
+        <BottomPosition>
+            <ButtonHolder variants={textVariants}>
+                <Button
+                    icon={'👏'}
+                    styles={css`
+                        color: #80d0c7;
+                        margin-bottom: 1rem;
+                    `}
+                    key={1}
+                    onClick={() => useModalOverlayContext.stateChangeHandler(true)}
+                >
+                    Applaudisseer
+                </Button>
+                <Button key={2} icon={'💌'} onClick={() => useClapModalOverlayContext.stateChangeHandler(true)}>
+                    Stuur een bericht
+                </Button>
+            </ButtonHolder>
+        </BottomPosition>
+    );
+};
 
 export default HomePage;

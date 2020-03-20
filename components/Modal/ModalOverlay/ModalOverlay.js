@@ -42,10 +42,10 @@ export default ({ children, dark = false, closeAsText = false }) => {
         useModalOverlayContext.stateChangeHandler(registered === 'true');
     }, [registered]);
 
-	const ModalTransition = staggerTransition
-	ModalTransition.duration = .5
-	ModalTransition.staggerChildren = .25
-	ModalTransition.delayChildren = .25
+    const ModalTransition = staggerTransition;
+    ModalTransition.duration = 0.5;
+    ModalTransition.staggerChildren = 0.25;
+    ModalTransition.delayChildren = 0.25;
 
     return (
         <>
