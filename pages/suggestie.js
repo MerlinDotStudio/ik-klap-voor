@@ -15,6 +15,7 @@ import styled from '@emotion/styled';
 import InputStyle from '../components/Inputs/InputStyle';
 import firebase from 'firebase';
 import Router from 'next/router';
+import { StyledForm } from './applaus-voor';
 
 export const InputWithIcon = styled(motion.div)`
     position: relative;
@@ -51,7 +52,7 @@ const ApplaudPage = () => {
 								<p>Heb jij een <strong>goed idee</strong> of mis je een <strong>branche/beroep</strong>?</p>
 							</div>
 						</BigText>
-						<form ref={FormRef}>
+						<StyledForm ref={FormRef} variants={textVariants}>
 							<InputWithIcon>
 								<div id="Mail">
 									<svg className="Path_642" viewBox="0 0 16 12" width={16} height={12}>
@@ -120,7 +121,7 @@ const ApplaudPage = () => {
 								</Button>
 							</ButtonHolder>
 						</BottomPosition>
-						</form>
+						</StyledForm>
 
 					</ContentWrapper>
 				</main>

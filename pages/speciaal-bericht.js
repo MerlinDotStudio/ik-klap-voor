@@ -47,7 +47,7 @@ const SpecialMessage = () => {
                                 </p>
                             </div>
                         </BigText>
-                        <StyledForm>
+                        <StyledForm variants={textVariants}>
                             <Select
                                 defaultValue={useModalOverlayContext.options && useModalOverlayContext.options[0]}
                                 options={useModalOverlayContext.options}
