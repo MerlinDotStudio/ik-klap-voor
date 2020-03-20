@@ -10,6 +10,7 @@ const InputStyle = props => {
         border: 1px solid ${theme.colors.white};
         cursor: text;
         box-shadow: inset 0 1px 3px 0 rgba(15, 31, 44, 0.1);
+        resize: none;
 
         width: 100%;
 

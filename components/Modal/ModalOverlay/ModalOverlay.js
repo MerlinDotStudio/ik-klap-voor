@@ -9,7 +9,7 @@ export const ModalOverlayContext = React.createContext(undefined);
 
 // create the provider
 export const ModalOverlayContextProvider = props => {
-    const [modalOpenState, setModalOpenState] = useState(true);
+    const [modalOpenState, setModalOpenState] = useState(false);
 
     return (
         <ModalOverlayContext.Provider
@@ -31,16 +31,9 @@ export const ModalOverlayContextProvider = props => {
 };
 
 export default ({ children, dark = false, closeAsText = false }) => {
-    const {
-        query: { registered },
-    } = useRouter();
+
     const useModalOverlayContext = useContext(ModalOverlayContext);
     const darkVersion = dark;
-
-    useEffect(() => {
-        // Only show model if registered query is true
-        useModalOverlayContext.stateChangeHandler(registered === 'true');
-    }, [registered]);
 
 	const ModalTransition = staggerTransition
 	ModalTransition.duration = .5

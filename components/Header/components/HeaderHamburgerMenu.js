@@ -80,11 +80,11 @@ const HeaderHamburgerMenu = props => {
     const links = [
         {
             text: '👏 Applaudisseer',
-            href: '/applaudisseer',
+            href: '/applaus-voor',
         },
         {
             text: '💌 Stuur een bericht',
-            href: '/bericht',
+            href: '/speciaal-bericht',
         },
         {
             text: '❤️ Bekijk alle steun',

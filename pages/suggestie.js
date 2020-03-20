@@ -86,6 +86,7 @@ const ApplaudPage = () => {
 									  css={InputStyle}
 									  placeholder={'Ik heb een goed idee / Ik vul graag de branches bij met'}
 									  required={true}
+									  maxLength={280}
 							/>
 						<BottomPosition>
 							<ButtonHolder variants={textVariants}>

@@ -19,8 +19,8 @@ import {
 } from 'react-share';
 import ApplaudModal from '../components/Modal/ApplaudModal';
 import {
-	ClapModalOverlayContext,
-	ClapModalOverlayContextProvider,
+    ClapModalOverlayContext,
+    ClapModalOverlayContextProvider,
 } from '../components/Modal/ModalOverlay/ClapModalOverlay';
 import ClapModal from '../components/Modal/ClapModal';
 
@@ -147,7 +147,6 @@ export const BlueGradientBackground = styled(motion.div)`
     left: 0;
     top: 0;
     overflow-y: auto;
-    padding-bottom: 4rem;
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -198,7 +197,6 @@ export const BlackGradientBackground = styled(motion.div)`
     left: 0;
     top: 0;
     overflow-y: auto;
-    padding-bottom: 4rem;
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -278,15 +276,31 @@ export const ContentWrapper = styled(motion.article)`
     justify-content: center;
     width: 100%;
     min-height: calc(100vh - 4rem);
+	max-width: calc(40rem + 20%);
+
+    > * {
+    	width: 100%;
+    	max-width: 32rem;
+    }
 `;
 
 export const ButtonHolder = styled(motion.div)`
     width: fit-content;
-    margin: 0 auto;
+    margin: 1rem auto;
 `;
 
 export const BottomPosition = styled(motion.div)`
     align-self: flex-end;
+    text-align: center;
+
+    a {
+        color: white;
+        border-bottom: 1px solid white;
+        text-decoration: none;
+        text-align: center;
+        margin: 1rem auto;
+        display: inline-block;
+    }
 `;
 
 export const HasNotification = styled.div`
@@ -331,57 +345,50 @@ export const fade = {
 const HomePage = () => {
     return (
         <BlueGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
-            <Header {...defaultHeaderProps} />
-            <ModalOverlayContextProvider>
-                <ClapModalOverlayContextProvider>
-                    <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
-                        <main>
-                            <ContentWrapper variants={textVariants}>
-                                <BigText variants={textVariants}>
-                                    <div>
-                                        <p>
-                                            Geef <strong>steun</strong> aan de eerste linie{' '}
-                                            <strong>Corona bestrijders</strong> en de <strong>andere helden</strong> die
-                                            ons land draaiend houden.
-                                        </p>
-                                    </div>
-                                </BigText>
-                                <ActionButtons/>
-                            </ContentWrapper>
-                        </main>
-                    </motion.div>
-                    <ApplaudModal />
-                    <ClapModal />
-                </ClapModalOverlayContextProvider>
-            </ModalOverlayContextProvider>
+            <Header hasAmount={true} {...defaultHeaderProps} />
+            <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
+                <main>
+                    <ContentWrapper variants={textVariants}>
+                        <BigText variants={textVariants}>
+                            <div>
+                                <p>
+                                    Geef <strong>steun</strong> aan de eerste linie <strong>Corona bestrijders</strong>{' '}
+                                    en de <strong>andere helden</strong> die ons land draaiend houden.
+                                </p>
+                            </div>
+                        </BigText>
+                        <ActionButtons />
+                    </ContentWrapper>
+                </main>
+            </motion.div>
         </BlueGradientBackground>
     );
 };
 
 const ActionButtons = () => {
-	const useModalOverlayContext = useContext(ModalOverlayContext);
-	const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
+    const useModalOverlayContext = useContext(ModalOverlayContext);
+    const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
 
-	return (
-		<BottomPosition>
-			<ButtonHolder variants={textVariants}>
-				<Button
-					icon={'👏'}
-					styles={css`
-                                                color: #80d0c7;
-                                                margin-bottom: 1rem;
-                                            `}
-					key={1}
-					onClick={() => useModalOverlayContext.stateChangeHandler(true)}
-				>
-					Applaudisseer
-				</Button>
-				<Button key={2} icon={'💌'} onClick={() => useClapModalOverlayContext.stateChangeHandler(true)}>
-					Stuur een bericht
-				</Button>
-			</ButtonHolder>
-		</BottomPosition>
-	)
-}
+    return (
+        <BottomPosition>
+            <ButtonHolder variants={textVariants}>
+                <Button
+                    icon={'👏'}
+                    styles={css`
+                        color: #80d0c7;
+                        margin-bottom: 1rem;
+                    `}
+                    key={1}
+                    to={'/applaus-voor'}
+                >
+                    Applaudisseer
+                </Button>
+                <Button key={2} icon={'💌'} to={'/speciaal-bericht'}>
+                    Stuur een bericht
+                </Button>
+            </ButtonHolder>
+        </BottomPosition>
+    );
+};
 
 export default HomePage;

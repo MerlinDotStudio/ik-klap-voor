@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 import { mq, theme } from '../../../../styles/global';
 
 const ModalBoxCSS = props => css`
-	background-color: rgba(55,55,55,.5);
+	background-color: rgba(55,55,55,.75);
     backdrop-filter: blur(6px);
     color: white;
 

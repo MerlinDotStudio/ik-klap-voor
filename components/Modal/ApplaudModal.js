@@ -25,7 +25,7 @@ const ApplaudModal = () => (
                 align-content: center;
                 text-align: center;
                 div {
-                    color: #111;
+                    color: #FFF;
                 }
             `}
         >

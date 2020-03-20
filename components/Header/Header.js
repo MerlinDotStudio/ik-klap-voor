@@ -8,7 +8,7 @@ import {
 import { HasNotification } from '../../pages';
 
 const Header = props => {
-
+	const { icon, hasAmount } = props
     const Header = styled.header`
         border-radius: 0 0 .5rem .5rem;
         position: fixed;
@@ -72,8 +72,8 @@ const Header = props => {
         <Header>
             <Nav>
                 <LogoTitle>
-					<HasNotification>123</HasNotification>
-					👏
+					{hasAmount ? <HasNotification>123</HasNotification> : null}
+					{icon ? icon : '👏' }
                 </LogoTitle>
                 <div className={'header-holder'}>
 					<HeaderHamburgerMenu />

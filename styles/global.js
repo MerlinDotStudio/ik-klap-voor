@@ -3,6 +3,7 @@ const theme = {
     colors: {
         grey: '#E8E8E8',
         greyType: '#383c3f',
+        greyTypeLight: '#6a7177',
         greyLines: '#383c3f',
         primary: '#C30A14',
         primaryLight: 'rgba(255,121,25,0.1)',
