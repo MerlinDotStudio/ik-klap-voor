@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import Header from '../components/Header/Header';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
 import {
     BigText,
-    BlackGradientBackground,
     BlueGradientBackground,
     BottomPosition,
     ButtonHolder,
@@ -14,35 +13,34 @@ import {
     fade,
     textVariants,
 } from './index';
-import styled from '@emotion/styled';
 import InputStyle from '../components/Inputs/InputStyle';
 import Select from 'react-select';
 import { theme } from '../styles/global';
 import Link from 'next/link';
-import { ModalOverlayContext, ModalOverlayContextProvider } from '../components/Modal/ModalOverlay/ModalOverlay';
+import { ModalOverlayContext } from '../components/Modal/ModalOverlay/ModalOverlay';
 import ApplaudModal from '../components/Modal/ApplaudModal';
 import { StyledForm } from './applaus-voor';
-
-// These should come from Firebase
-export const options = [
-    { value: 'iedereen', label: '🌍 Iedereen' },
-    { value: 'brandweer', label: '👨‍🚒 De brandweer' },
-    { value: 'artsen', label: '🧑‍⚕️ De artsen' },
-    { value: 'postbezorgers', label: 'Postbezorgers' },
-    { value: 'voedselbezorgers', label: 'Voedselbezorgers' },
-    { value: 'supermarkt', label: 'Supermarkt medewerkers' },
-];
+import firebase from 'firebase';
 
 const SpecialMessage = () => {
     const useModalOverlayContext = useContext(ModalOverlayContext);
-    let [textLength, setTextLength] = useState(0);
+    const [textLength, setTextLength] = useState(0);
+    const [selectValue, setSelectValue] = useState(useModalOverlayContext.options && useModalOverlayContext.options[0]);
+    const TextRef = useRef(undefined);
+    const db = firebase.firestore();
+
     return (
         <BlueGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
             <Header {...defaultHeaderProps} icon={'💌'} />
             <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
                 <main>
                     <ContentWrapper variants={textVariants}>
-                        <BigText variants={textVariants} css={css`text-align: center;`}>
+                        <BigText
+                            variants={textVariants}
+                            css={css`
+                                text-align: center;
+                            `}
+                        >
                             <div>
                                 <p>
                                     Een <strong>speciaal bericht</strong> voor
@@ -51,8 +49,8 @@ const SpecialMessage = () => {
                         </BigText>
                         <StyledForm>
                             <Select
-								defaultValue={options[0]}
-                                options={options}
+                                defaultValue={useModalOverlayContext.options && useModalOverlayContext.options[0]}
+                                options={useModalOverlayContext.options}
                                 isClearable={false}
                                 placeholder={'🌍 Iedereen'}
                                 styles={{
@@ -79,6 +77,12 @@ const SpecialMessage = () => {
                                         margin: '1rem 0',
                                     }),
                                 }}
+                                onChange={e =>
+                                    setSelectValue({
+                                        value: e.value,
+                                        label: e.label,
+                                    })
+                                }
                             />
                             <div
                                 css={css`
@@ -97,6 +101,7 @@ const SpecialMessage = () => {
                                     onInput={e => {
                                         setTextLength(e.target.value.length);
                                     }}
+                                    ref={TextRef}
                                 />
                                 <span
                                     css={css`
@@ -113,7 +118,24 @@ const SpecialMessage = () => {
                             <BottomPosition>
                                 <ButtonHolder variants={textVariants}>
                                     {/*Message should be sent to Firebase*/}
-                                    <Button key={2} icon={'💌'} ariaDisabled={textLength < 8} onClick={()=> useModalOverlayContext.stateChangeHandler(true)}>
+                                    <Button
+                                        key={2}
+                                        icon={'💌'}
+                                        ariaDisabled={textLength < 8}
+                                        onClick={() => {
+                                            if (textLength < 8) return;
+                                            db.collection('berichten')
+                                                .doc(selectValue.value)
+                                                .collection('messages')
+                                                .add({
+                                                    messages: {
+                                                        bericht: TextRef.current.value,
+                                                        date: Date.now(),
+                                                    },
+                                                });
+                                            useModalOverlayContext.stateChangeHandler(true);
+                                        }}
+                                    >
                                         Plaats jouw bericht
                                     </Button>
                                 </ButtonHolder>

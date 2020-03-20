@@ -4,22 +4,22 @@ import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
 import {
-    BigText,
-    BlueGradientBackground,
-    BottomPosition,
-    ButtonHolder,
-    ContentWrapper,
-    defaultHeaderProps,
-    fade,
-    textVariants,
+	BigText,
+	BlueGradientBackground,
+	BottomPosition,
+	ButtonHolder,
+	ContentWrapper,
+	defaultHeaderProps,
+	fade, incrementCertainApplaus,
+	textVariants,
 } from './index';
 import Select from 'react-select';
 import { theme } from '../styles/global';
 import Link from 'next/link';
 import { ClapModalOverlayContext } from '../components/Modal/ModalOverlay/ClapModalOverlay';
-import { options } from './speciaal-bericht';
 import ClapModal from '../components/Modal/ClapModal';
 import styled from '@emotion/styled';
+import { ModalOverlayContext } from '../components/Modal/ModalOverlay/ModalOverlay';
 
 export const StyledForm = styled(motion.form)`
 	max-width: 30rem;
@@ -27,7 +27,10 @@ export const StyledForm = styled(motion.form)`
 
 const SpecialMessage = () => {
     const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
-    return (
+	const useModalOverlayContext = useContext(ModalOverlayContext);
+	const [selectValue, setSelectValue] = useState(useModalOverlayContext.options && useModalOverlayContext.options[0].value);
+
+	return (
         <BlueGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
             <Header {...defaultHeaderProps} icon={'💌'} />
             <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
@@ -42,8 +45,8 @@ const SpecialMessage = () => {
                         </BigText>
                         <StyledForm>
                             <Select
-								defaultValue={options[0]}
-                                options={options}
+								defaultValue={useModalOverlayContext.options[0]}
+                                options={useModalOverlayContext.options}
                                 isClearable={false}
                                 placeholder={'🌍 Iedereen'}
                                 styles={{
@@ -70,11 +73,15 @@ const SpecialMessage = () => {
                                         margin: '1rem 0 40vh',
                                     }),
                                 }}
+								onChange={e => setSelectValue(e.value)}
                             />
                             <BottomPosition>
                                 <ButtonHolder variants={textVariants}>
                                     {/*Message should be sent to Firebase*/}
-                                    <Button key={2} icon={'👏'} onClick={() =>  useClapModalOverlayContext.stateChangeHandler(true)}>
+                                    <Button key={2} icon={'👏'} onClick={() => {
+                                    	useClapModalOverlayContext.stateChangeHandler(true)
+										incrementCertainApplaus(selectValue)
+                                    }}>
                                         Applaudisseer
                                     </Button>
                                 </ButtonHolder>

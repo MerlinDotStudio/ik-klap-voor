@@ -17,12 +17,13 @@ import Select from 'react-select';
 import { theme } from '../styles/global';
 import Link from 'next/link';
 import { ClapModalOverlayContext } from '../components/Modal/ModalOverlay/ClapModalOverlay';
-import { options } from './speciaal-bericht';
 import ClapModal from '../components/Modal/ClapModal';
 import styled from '@emotion/styled';
 import * as Fuse from 'fuse.js';
-import { format } from 'date-fns'
-import { nl } from "date-fns/locale";
+import { format } from 'date-fns';
+import { nl } from 'date-fns/locale';
+import { ModalOverlayContext } from '../components/Modal/ModalOverlay/ModalOverlay';
+import firebase from 'firebase';
 
 const Messages = styled(motion.ul)`
     padding: 0;
@@ -35,9 +36,9 @@ const Messages = styled(motion.ul)`
         box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.16);
         margin-bottom: 1rem;
         .title {
-            font-size: 1.5626rem;
+            font-size: calc(1.25rem + 1vh);
             color: #80d0c7;
-            margin: .5rem 0 1rem;
+            margin: 0.5rem 0 1rem;
 
             strong {
                 color: black;
@@ -55,81 +56,142 @@ const Messages = styled(motion.ul)`
 `;
 
 const AllSupport = () => {
-    const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
+    const useModalOverlayContext = useContext(ModalOverlayContext);
+    const [profession, setProfession] = useState(
+        useModalOverlayContext.options && useModalOverlayContext.options.length,
+    );
+    let [messages, setMessages] = useState([
+		{
+			name: '',
+			bericht: '',
+			date: Date.now(),
+		},
+		{
+			name: '',
+			bericht: '',
+			date: Date.now(),
+		},
+		{
+			name: '',
+			bericht: '',
+			date: Date.now(),
+		},
+	]);
+    const [searchValue, setSearchValue] = useState('');
+
+    const [mostProfession, setMostProfession] = useState({
+        name: '🌍 Iedereen',
+        number: 0,
+    });
+
     const data = {
-        applaud: 123,
-        beroepen: 23,
-        meesteBeroep: '🧑‍⚕️ De artsen',
+        applaud: useModalOverlayContext.applausAmount,
+        beroepen: profession,
+        meesteBeroep: mostProfession.name,
     };
 
-    const searchResults = [
-        {
-            for: '🌍 Iedereen',
-            text:
-                'Kudo’s naar iedereen die zich zó goed aan het advies houd van het RIVM en thuis werkt! Alleen maar liefde!',
-            date: Date.now(),
-        },
-        {
-            for: '🌍 Iedereen',
-            text:
-                'Kudo’s naar iedereen die zich zó goed aan het advies houd van het RIVM en thuis werkt! Alleen maar liefde!',
-            date: Date.now(),
-        },
-        {
-            for: '🌍 Artsen',
-            text:
-                'Kudo’s naar iedereen die zich zó goed aan het advies houd van het RIVM en thuis werkt! Alleen maar liefde!',
-            date: Date.now(),
-        },
-        {
-            for: '🌍 Dokters',
-            text:
-                'Kudo’s naar iedereen die zich zó goed aan het advies houd van het RIVM en thuis werkt! Alleen maar liefde!',
-            date: Date.now(),
-        },
-    ];
+    useEffect(() => {
+        const db = firebase.firestore();
+        const applauseData = db.collection('applaus').get();
+        applauseData.then(snapshot => {
+            const values = [];
+            let highestValue = {
+                name: '🌍 Iedereen',
+                number: 0,
+            }; //name goes here
+            snapshot.forEach(doc => {
+                const docData = doc.data();
+                if (docData.number > highestValue.number)
+                    highestValue = {
+                        name: docData.name,
+                        number: docData.number,
+                    };
+                values.push(docData);
+            });
+            // -1 because of "iedereen"
+            setProfession(values.length - 1);
+            setMostProfession(highestValue);
+        });
 
-    const [searchValue, setSearchValue] = useState(null);
+        const messageData = db.collection('berichten').get();
+        messageData.then(snapshot => {
+            const dataObject = [];
+            snapshot.forEach(doc => {
+                const docData = doc.data();
+                const messageArray = [];
+                // doc.id = iedereen, artsen, brandweer
+                db.collection('berichten')
+                    .doc(doc.id)
+                    .collection('messages')
+                    .get()
+                    .then(data2 => {
+                        data2.forEach(item => {
+                            const docData2 = item.data();
+                            messageArray.push(docData2.messages);
+                        });
+						messageArray.forEach(message => {
+							dataObject.push({
+								name: docData.name,
+								bericht: message.bericht,
+								date: message.date
+							})
+						})
+                        // dataObject.push({
+                        //     name: docData.name,
+                        //     messages: messageArray,
+                        // });
+						const sortByNew = dataObject.sort(function(a,b){
+							// Turn your strings into dates, and then subtract them
+							// to get a value that is either negative, positive, or zero.
+							return new Date(b.date) - new Date(a.date);
+						});
+						setMessages(sortByNew);
+                    });
+            });
+        });
+    }, [profession]);
+
     const searchOptions = {
         shouldSort: true,
-        threshold: 0.6,
+        threshold: 0.25,
         location: 0,
-        distance: 100,
+        distance: 60,
         maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['for', 'text', 'date'],
+        minMatchCharLength: 3,
+			keys: ['name', 'messages.bericht', 'messages.date'],
     };
 
-    const fuse = new Fuse(searchResults, searchOptions);
-
     function getSearchResults() {
-        const result = searchValue ? fuse.search(searchValue) : searchResults;
+        const fuse = new Fuse(messages, searchOptions);
+        const workFieldTypes = searchValue ? fuse.search(searchValue) : messages;
 
         return (
             <Messages variants={textVariants}>
-                {result.length ? (
-                    result.map((result, i) =>
-                        result.item ? (
-                            <motion.li key={i} variants={textVariants}>
-                                <p className={'title'}>
-                                    <strong>Aan</strong>
-                                    {result.item.for}
-                                </p>
-                                <p className={'text'}>{result.item.text}</p>
-                                <footer>{format(new Date(result.item.date), 'PPpp', {locale: nl})}</footer>
-                            </motion.li>
-                        ) : (
-                            <motion.li key={i} variants={textVariants}>
-                                <p className={'title'}>
-                                    <strong>Aan</strong>
-                                    {result.for}
-                                </p>
-                                <p className={'text'}>{result.text}</p>
-                                <footer>{format(new Date(result.date), 'PPpp', {locale: nl})}</footer>
-                            </motion.li>
-                        ),
-                    )
-                ) : (
+				{workFieldTypes && workFieldTypes.length ? (
+					workFieldTypes.map((type, i) => {
+						const { name, messages } = type;
+						return type.item ? (
+							<motion.li key={`${i}`} variants={textVariants}>
+								<p className={'title'}>
+									<strong>Aan</strong>
+									{type.item.name}
+								</p>
+								<p className={'text'}>{type.item.bericht}</p>
+								<footer>{format(new Date(type.item.date), 'PPpp', { locale: nl })}</footer>
+							</motion.li>
+						) : (
+							<motion.li key={`${i}`} variants={textVariants}>
+								<p className={'title'}>
+									<strong>Aan</strong>
+									{type.name}
+								</p>
+								<p className={'text'}>{type.bericht}</p>
+								<footer>{format(new Date(type.date), 'PPpp', { locale: nl })}</footer>
+							</motion.li>
+						)
+					})
+				)
+				 : (
                     <p
                         css={css`
                             color: white;
@@ -164,8 +226,8 @@ const AllSupport = () => {
                             <div>
                                 <p>
                                     Er is al <strong>{data.applaud} keer</strong> 👏 geapplaudisseerd, voor{' '}
-                                    <strong>{data.beroepen}</strong> verschillende beroeps groepen! De populairste
-                                    beroeps groep is: <strong>{data.meesteBeroep}</strong>!
+                                    <strong>{data.beroepen}</strong> verschillende beroeps groepen! De meest benoemde
+                                    groep is: <strong>{data.meesteBeroep}</strong>!
                                 </p>
                             </div>
                         </BigText>
@@ -177,7 +239,7 @@ const AllSupport = () => {
                         </ButtonHolder>
                         <motion.div variants={textVariants}>
                             <Select
-                                options={options}
+                                options={useModalOverlayContext.options}
                                 isClearable={true}
                                 placeholder={'🔍 Filter berichten op...'}
                                 styles={{
@@ -204,7 +266,7 @@ const AllSupport = () => {
                                         margin: '4rem 0 2rem',
                                     }),
                                 }}
-                                onChange={e => setSearchValue(e.value)}
+                                onChange={e => e && e.value ? setSearchValue(e.value) : setSearchValue(null)}
                             />
                         </motion.div>
                         {getSearchResults(searchValue)}

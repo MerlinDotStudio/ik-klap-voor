@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import HamburgerIcon from '../../../public/icons/Hamburger';
 import styled from '@emotion/styled';
 import useKeyPress from '../../../utils/useKeypress';
@@ -8,6 +8,7 @@ import { css } from '@emotion/core';
 import Link from 'next/link';
 import { HeaderLanguageSelector } from '../_Components';
 import { HasNotification } from '../../../pages';
+import { ModalOverlayContext } from '../../Modal/ModalOverlay/ModalOverlay';
 
 const HeaderHamburgerMenu = props => {
     const [menuOpen, toggleMenuOpen] = useState(false);
@@ -171,6 +172,7 @@ const HeaderHamburgerMenu = props => {
 		z-index: 1;
 		background-color: rgba(0, 0, 0, .16);
 	`
+	const useModalOverlayContext = useContext(ModalOverlayContext);
 
     return (
         <div>
@@ -205,9 +207,9 @@ const HeaderHamburgerMenu = props => {
 										rotate: '-1deg',
 										transition: { duration: .25 },
 									}} whileTap={{ scale: 0.9 }}>
-										{i === 1 ? <HasNotification>123</HasNotification> : null}
-										{i === 2 ? <HasNotification>2</HasNotification> : null}
-										<Link href={link.href}>{link.text}</Link>
+										{i === 1 ? <HasNotification>{useModalOverlayContext.applausAmount}</HasNotification> : null}
+										{i === 2 ? <HasNotification>{useModalOverlayContext.messageAmount}</HasNotification> : null}
+										<Link href={link.href}><a>{link.text}</a></Link>
 									</StyledLink>
 								))}
 							</List>

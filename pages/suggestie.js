@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Header from '../components/Header/Header';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
@@ -13,7 +13,8 @@ import {
 } from './index';
 import styled from '@emotion/styled';
 import InputStyle from '../components/Inputs/InputStyle';
-
+import firebase from 'firebase';
+import Router from 'next/router';
 
 export const InputWithIcon = styled(motion.div)`
     position: relative;
@@ -33,7 +34,13 @@ export const InputWithIcon = styled(motion.div)`
 `;
 
 const ApplaudPage = () => {
-    return (
+	const EmailRef = useRef(undefined);
+	const NameRef = useRef(undefined);
+	const TextRef = useRef(undefined);
+	const FormRef = useRef(undefined);
+	const db = firebase.firestore();
+
+	return (
 		<BlackGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
 			<Header {...defaultHeaderProps} />
 			<motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
@@ -44,7 +51,7 @@ const ApplaudPage = () => {
 								<p>Heb jij een <strong>goed idee</strong> of mis je een <strong>branche/beroep</strong>?</p>
 							</div>
 						</BigText>
-						<form>
+						<form ref={FormRef}>
 							<InputWithIcon>
 								<div id="Mail">
 									<svg className="Path_642" viewBox="0 0 16 12" width={16} height={12}>
@@ -62,6 +69,7 @@ const ApplaudPage = () => {
 									name={'email'}
 									required={true}
 									autoComplete={'email'}
+									ref={EmailRef}
 								/>
 							</InputWithIcon>
 							<InputWithIcon>
@@ -80,6 +88,7 @@ const ApplaudPage = () => {
 									name={'name'}
 									required={true}
 									autoComplete={'name'}
+									ref={NameRef}
 								/>
 							</InputWithIcon>
 							<textarea name="message" id="message" cols="30" rows="10"
@@ -87,10 +96,26 @@ const ApplaudPage = () => {
 									  placeholder={'Ik heb een goed idee / Ik vul graag de branches bij met'}
 									  required={true}
 									  maxLength={280}
+									  ref={TextRef}
 							/>
 						<BottomPosition>
 							<ButtonHolder variants={textVariants}>
-								<Button key={2} icon={'💌'} type={'submit'}>
+								<Button key={2} icon={'💌'} type={'submit'} onClick={(e) => {
+									e.preventDefault()
+									const validForm = FormRef.current.reportValidity();
+									if (!validForm) return;
+									db.collection('suggesties')
+										.add({
+											email: EmailRef.current.value,
+											name: NameRef.current.value,
+											text: TextRef.current.value,
+										});
+									let isClicked = window.confirm('Bedankt voor je suggestie, we gaan er zo snel mogelijk naar kijken.');
+									if(isClicked || !isClicked){
+										Router.push('/alle-steun')
+									}
+								}}
+								>
 									Stuur een bericht
 								</Button>
 							</ButtonHolder>

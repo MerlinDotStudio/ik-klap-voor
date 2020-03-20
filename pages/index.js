@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header/Header';
 import { theme } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
-import * as firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/analytics';
+import firebase from 'firebase';
+import { ModalOverlayContext } from '../components/Modal/ModalOverlay/ModalOverlay';
 
 export const firebaseConfig = {
 	apiKey: process.env.apiKey,
@@ -20,45 +19,19 @@ export const firebaseConfig = {
 	measurementId: process.env.measurementId,
 };
 
-// MEES FIREBASE SET UP
-// const db = firebase.firestore()
-// let user = firebase.auth().currentUser;
-//
-// if (!user) {
-// 	console.log('fu');
-// 	Router.push('/login')
-// }
-//
-// const data = {
-// 	age: 24
-// }
-// console.clear()
-// async function checkIfUserDataAndAddOrUpdate(newData, uid){
-// 	let userRef = db.collection('users').doc(uid);
-// 	const oldData = await userRef.get()
-// 		.then(doc => {
-// 			if (!doc.exists) {
-// 				console.log('No such document!');
-// 				return {}
-// 			} else {
-// 				return doc.data()
-// 			}
-// 		})
-// 		.catch(err => {
-// 			console.log('Error getting document', err);
-// 		});
-// 	console.log(oldData, newData);
-// 	const dataForUser = Object.assign(oldData, newData);
-// 	console.log(dataForUser);
-// 	return await firebase.firestore().collection('users').doc(uid).set(dataForUser)
-// }
-//
-// checkIfUserDataAndAddOrUpdate({saus: 'test', sexPref: 'male', sex: 'female'}, user.uid).then( data => {
-// 	console.log('updated', data)
-// 	checkIfUserDataAndAddOrUpdate({saus: 'test2', sexPref: 'female'}, user.uid).then( data => {
-// 		console.log('updated', data)
-// 	})
-// })
+if (!firebase.apps.length) {
+	firebase.initializeApp(firebaseConfig);
+}
+
+export function incrementCertainApplaus(doc){
+	const db = firebase.firestore()
+	const increment = firebase.firestore.FieldValue.increment(1);
+	// Document reference
+	console.log(doc);
+	const docRef = db.collection('applaus').doc(doc);
+	// Update read count
+	docRef.update({ number: increment });
+}
 
 const ContainerForm = styled.form`
     width: 2.75rem;
@@ -100,39 +73,6 @@ const ContainerForm = styled.form`
         }
     }
 `;
-
-export const FabLike = props => {
-    const { id, checked, defaultValue, disabled, name, label, styles } = props;
-    const [clicked, setClicked] = useState(false);
-
-    const handleOnChange = event => {
-        const { onChange } = this.props;
-        const newChecked = event.target.checked;
-
-        if (onChange) {
-            onChange(newChecked);
-        }
-    };
-
-    function animateHeart(e) {
-        e.preventDefault();
-        setClicked(!clicked);
-    }
-
-    return (
-        <ContainerForm action="" onSubmit={e => animateHeart(e)} css={styles ? styles : undefined}>
-            <input type="hidden" value={id} name={'id'} />
-            <button type={'submit'} aria-label={'Like'}>
-                <span style={{ position: 'absolute', opacity: '0', pointerEvents: 'none' }}>Like</span>
-            </button>
-            <div className={'icon'}>
-                {/*<Heart animationClassName={clicked ? 'clicked' : null} />*/}
-                icon hier
-            </div>
-            {label}
-        </ContainerForm>
-    );
-};
 
 export const BlueGradientBackground = styled(motion.div)`
     background-image: linear-gradient(0deg, ${theme.colors.darkBlue} 0%, ${theme.colors.lightBlue} 100%);
@@ -339,9 +279,11 @@ export const fade = {
 };
 
 const HomePage = () => {
+	const useModalOverlayContext = useContext(ModalOverlayContext);
+
     return (
         <BlueGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
-            <Header hasAmount={true} {...defaultHeaderProps} />
+            <Header hasAmount={true} amount={useModalOverlayContext.applausAmount} {...defaultHeaderProps} />
             <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
                 <main>
                     <ContentWrapper variants={textVariants}>
@@ -362,7 +304,7 @@ const HomePage = () => {
 };
 
 const ActionButtons = () => {
-    return (
+	return (
         <BottomPosition>
             <ButtonHolder variants={textVariants}>
                 <Button
