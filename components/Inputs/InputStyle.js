@@ -11,6 +11,8 @@ const InputStyle = props => {
         cursor: text;
         box-shadow: inset 0 1px 3px 0 rgba(15, 31, 44, 0.1);
         resize: none;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+                                sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
         width: 100%;
 

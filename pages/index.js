@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header/Header';
 import { theme } from '../styles/global';

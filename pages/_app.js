@@ -1,12 +1,10 @@
 import React from 'react';
 import App from 'next/app';
 import { Global, css } from '@emotion/core';
-import { theme } from '../styles/global';
 import SEOHead from '../components/SEOHead';
 import { AnimatePresence } from 'framer-motion';
 import { ModalOverlayContextProvider } from '../components/Modal/ModalOverlay/ModalOverlay';
 import { ClapModalOverlayContextProvider } from '../components/Modal/ModalOverlay/ClapModalOverlay';
-import { BlueGradientBackground } from './index';
 
 class MyApp extends App {
     render() {

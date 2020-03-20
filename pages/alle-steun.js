@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Suspense } from 'react';
 import Header from '../components/Header/Header';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import {
     BigText,
     BlueGradientBackground,
-    BottomPosition,
     ButtonHolder,
     ContentWrapper,
     defaultHeaderProps,
@@ -16,7 +15,6 @@ import {
 import Select from 'react-select';
 import { theme } from '../styles/global';
 import Link from 'next/link';
-import { ClapModalOverlayContext } from '../components/Modal/ModalOverlay/ClapModalOverlay';
 import ClapModal from '../components/Modal/ClapModal';
 import styled from '@emotion/styled';
 import * as Fuse from 'fuse.js';
@@ -24,6 +22,17 @@ import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { ModalOverlayContext } from '../components/Modal/ModalOverlay/ModalOverlay';
 import firebase from 'firebase';
+import {
+    FacebookIcon,
+    FacebookShareButton,
+    LinkedinIcon,
+    LinkedinShareButton,
+    TwitterIcon,
+    TwitterShareButton,
+    WhatsappIcon,
+    WhatsappShareButton,
+} from 'react-share';
+import { InView, useInView } from 'react-intersection-observer';
 
 const Messages = styled(motion.ul)`
     padding: 0;
@@ -61,23 +70,24 @@ const AllSupport = () => {
         useModalOverlayContext.options && useModalOverlayContext.options.length,
     );
     let [messages, setMessages] = useState([
-		{
-			name: '',
-			bericht: '',
-			date: Date.now(),
-		},
-		{
-			name: '',
-			bericht: '',
-			date: Date.now(),
-		},
-		{
-			name: '',
-			bericht: '',
-			date: Date.now(),
-		},
-	]);
+        {
+            name: '',
+            bericht: '',
+            date: Date.now(),
+        },
+        {
+            name: '',
+            bericht: '',
+            date: Date.now(),
+        },
+        {
+            name: '',
+            bericht: '',
+            date: Date.now(),
+        },
+    ]);
     const [searchValue, setSearchValue] = useState('');
+    const [lazyValue, setLazyValue] = useState(10);
 
     const [mostProfession, setMostProfession] = useState({
         name: '🌍 Iedereen',
@@ -129,23 +139,15 @@ const AllSupport = () => {
                             const docData2 = item.data();
                             messageArray.push(docData2.messages);
                         });
-						messageArray.forEach(message => {
-							dataObject.push({
-								name: docData.name,
-								bericht: message.bericht,
-								date: message.date
-							})
-						})
-                        // dataObject.push({
-                        //     name: docData.name,
-                        //     messages: messageArray,
-                        // });
-						const sortByNew = dataObject.sort(function(a,b){
-							// Turn your strings into dates, and then subtract them
-							// to get a value that is either negative, positive, or zero.
-							return new Date(b.date) - new Date(a.date);
-						});
-						setMessages(sortByNew);
+                        messageArray.forEach(message => {
+                            dataObject.push({
+                                name: docData.name,
+                                bericht: message.bericht,
+                                date: message.date,
+                            });
+                        });
+                        const sortByNew = dataObject.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        setMessages(sortByNew);
                     });
             });
         });
@@ -158,40 +160,41 @@ const AllSupport = () => {
         distance: 60,
         maxPatternLength: 32,
         minMatchCharLength: 3,
-			keys: ['name', 'messages.bericht', 'messages.date'],
+        keys: ['name', 'messages.bericht', 'messages.date'],
     };
 
-    function getSearchResults() {
+    function getSearchResults(startAmount, maxAmount) {
         const fuse = new Fuse(messages, searchOptions);
         const workFieldTypes = searchValue ? fuse.search(searchValue) : messages;
-
+		if(workFieldTypes && workFieldTypes.length){
+			workFieldTypes.splice(maxAmount, workFieldTypes.length);
+			workFieldTypes.splice(0, startAmount);
+		}
         return (
             <Messages variants={textVariants}>
-				{workFieldTypes && workFieldTypes.length ? (
-					workFieldTypes.map((type, i) => {
-						const { name, messages } = type;
-						return type.item ? (
-							<motion.li key={`${i}`} variants={textVariants}>
-								<p className={'title'}>
-									<strong>Aan</strong>
-									{type.item.name}
-								</p>
-								<p className={'text'}>{type.item.bericht}</p>
-								<footer>{format(new Date(type.item.date), 'PPpp', { locale: nl })}</footer>
-							</motion.li>
-						) : (
-							<motion.li key={`${i}`} variants={textVariants}>
-								<p className={'title'}>
-									<strong>Aan</strong>
-									{type.name}
-								</p>
-								<p className={'text'}>{type.bericht}</p>
-								<footer>{format(new Date(type.date), 'PPpp', { locale: nl })}</footer>
-							</motion.li>
-						)
-					})
-				)
-				 : (
+                {workFieldTypes && workFieldTypes.length ? (
+                    workFieldTypes.map((type, i) => {
+                        return type.item ? (
+                            <motion.li key={`${i}`} variants={textVariants}>
+                                <p className={'title'}>
+                                    <strong>Aan</strong>
+                                    {type.item.name}
+                                </p>
+                                <p className={'text'}>{type.item.bericht}</p>
+                                <footer>{format(new Date(type.item.date), 'PPpp', { locale: nl })}</footer>
+                            </motion.li>
+                        ) : (
+                            <motion.li key={`${i}`} variants={textVariants}>
+                                <p className={'title'}>
+                                    <strong>Aan</strong>
+                                    {type.name}
+                                </p>
+                                <p className={'text'}>{type.bericht}</p>
+                                <footer>{format(new Date(type.date), 'PPpp', { locale: nl })}</footer>
+                            </motion.li>
+                        );
+                    })
+                ) : (
                     <p
                         css={css`
                             color: white;
@@ -211,6 +214,21 @@ const AllSupport = () => {
             </Messages>
         );
     }
+
+	function lazyLoadElements(min, max){
+		return messages.length >= min ? (
+			<InView>
+				{({ inView, ref, entry }) => (
+					<div ref={ref} css={css`min-height: 5rem;`}>
+						<Suspense fallback={<div>Momentje...</div>}>
+							{inView && getSearchResults(min, max)}
+						</Suspense>
+					</div>
+				)}
+			</InView>
+		) : null
+	}
+
     return (
         <BlueGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
             <Header {...defaultHeaderProps} icon={'️❤️'} />
@@ -232,12 +250,81 @@ const AllSupport = () => {
                             </div>
                         </BigText>
                         <ButtonHolder variants={textVariants}>
-                            {/*Message should be sent to Firebase*/}
                             <Button key={2} icon={'👏'} to={'/applaus-voor'}>
                                 Applaudisseer
                             </Button>
+                            <motion.ul
+                                variants={textVariants}
+                                css={css`
+                                    display: flex;
+                                    justify-content: center;
+                                    padding: 0;
+                                    margin: 2rem auto 0;
+                                    li {
+                                        list-style-type: none;
+                                        margin: 0.5rem;
+                                    }
+                                `}
+                            >
+                                <li>
+                                    <FacebookShareButton
+                                        url={'https://ikklapvoor.nl'}
+                                        hashtag={'covid19, corona, nederland'}
+                                        quote={
+                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
+                                        }
+                                    >
+                                        <FacebookIcon size={32} round={true} />
+                                    </FacebookShareButton>
+                                </li>
+                                <li>
+                                    <LinkedinShareButton
+                                        url={'https://ikklapvoor.nl'}
+                                        title={'ik klap voor...'}
+                                        summary={
+                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
+                                        }
+                                    >
+                                        <LinkedinIcon size={32} round={true} />
+                                    </LinkedinShareButton>
+                                </li>
+                                <li>
+                                    <TwitterShareButton
+                                        url={'https://ikklapvoor.nl'}
+                                        title={
+                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
+                                        }
+                                    >
+                                        <TwitterIcon size={32} round={true} />
+                                    </TwitterShareButton>
+                                </li>
+                                <li>
+                                    <WhatsappShareButton
+                                        url={'https://ikklapvoor.nl'}
+                                        title={
+                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
+                                        }
+                                    >
+                                        <WhatsappIcon size={32} round={true} />
+                                    </WhatsappShareButton>
+                                </li>
+                            </motion.ul>
                         </ButtonHolder>
-                        <motion.div variants={textVariants}>
+                        <motion.div
+                            variants={textVariants}
+                            css={css`
+                                margin: 4rem 0 2rem;
+                            `}
+                        >
+                            <span
+                                css={css`
+                                    color: white;
+                                    margin-bottom: .25rem;
+                                    display: inline-block;
+                                `}
+                            >
+                                {useModalOverlayContext.messageAmount} berichten.
+                            </span>
                             <Select
                                 options={useModalOverlayContext.options}
                                 isClearable={true}
@@ -263,13 +350,36 @@ const AllSupport = () => {
                                         boxShadow: 'inset 0 1px 3px 0 rgba(15,31,44,0.1)',
                                         borderRadius: '8px',
                                         border: `1px solid ${theme.colors.white}`,
-                                        margin: '4rem 0 2rem',
                                     }),
                                 }}
-                                onChange={e => e && e.value ? setSearchValue(e.value) : setSearchValue(null)}
+                                onChange={e => (e && e.value ? setSearchValue(e.value) : setSearchValue(null))}
                             />
                         </motion.div>
-                        {getSearchResults(searchValue)}
+						{
+							typeof window !== 'undefined' ? (
+								<Suspense fallback={<div>Momentje...</div>}>
+									{getSearchResults(0, 32)}
+								</Suspense>
+							) : null
+						}
+						{
+							lazyLoadElements(32, 64)
+						}
+						{
+							lazyLoadElements(64, 96)
+						}
+						{
+							lazyLoadElements(96, 128)
+						}
+						{
+							lazyLoadElements(128, 160)
+						}
+						{
+							lazyLoadElements(160, 192)
+						}
+						{
+							lazyLoadElements(192, 224)
+						}
                     </ContentWrapper>
                 </main>
             </motion.div>
