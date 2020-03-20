@@ -28,7 +28,7 @@ export const StyledForm = styled(motion.form)`
 const SpecialMessage = () => {
     const useClapModalOverlayContext = useContext(ClapModalOverlayContext);
 	const useModalOverlayContext = useContext(ModalOverlayContext);
-	const [selectValue, setSelectValue] = useState(useModalOverlayContext.options && useModalOverlayContext.options[0].value);
+	const [selectValue, setSelectValue] = useState(useModalOverlayContext.options && useModalOverlayContext.options[0] && useModalOverlayContext.options[0].value);
 
 	return (
         <BlueGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
@@ -45,7 +45,7 @@ const SpecialMessage = () => {
                         </BigText>
                         <StyledForm>
                             <Select
-								defaultValue={useModalOverlayContext.options[0]}
+								defaultValue={useModalOverlayContext.options && useModalOverlayContext.options[0]}
                                 options={useModalOverlayContext.options}
                                 isClearable={false}
                                 placeholder={'🌍 Iedereen'}
