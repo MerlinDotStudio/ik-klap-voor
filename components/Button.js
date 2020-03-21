@@ -15,7 +15,7 @@ const ButtonStyles = `
     font-weight: bold;
     outline: none;
     cursor: pointer;
-    padding: 1rem 3.5rem 1rem 3.5rem;
+    padding: 1rem 2.5rem 1rem 2.5rem;
     position: relative;
     white-space: nowrap;
     width: 100%;

@@ -34,27 +34,34 @@ export default props => {
             <meta name="apple-mobile-web-app-title" content="ik klap voor" />
             <meta name="application-name" content="ik klap voor" />
             <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
-            <meta name="image" content="https://ikklapvoor.nl/" />
+            <meta name="image" content="/images/metatag.jpg" />
 
             <meta name="google-site-verification" content="2hdFjE7vYsnEDzA1ZRqyCbcNlQkFaiUvHT9KCg4FCHI" />
 
             <meta itemProp="name" content="ik klap voor" />
             <meta
                 itemProp="description"
-                content="Klappen voor de helden van Corona of plaats een bericht om zo de mensen die elke dag hun ding doen een hart onder de riem te steken"
+                content="Klap voor de helden van Corona of plaats een bericht om zo de mensen die elke dag hun ding doen een hart onder de riem te steken"
             />
-            <meta itemProp="image" content="https://ikklapvoor.nl/meta-images/metatag.png" />
+            <meta itemProp="image" content="/images/metatag.jpg" />
 
             <meta name="og:title" content="ik klap voor" />
             <meta
                 name="og:description"
-                content="Klappen voor de helden van Corona of plaats een bericht om zo de mensen die elke dag hun ding doen een hart onder de riem te steken"
+                content="Klap voor de helden van Corona of plaats een bericht om zo de mensen die elke dag hun ding doen een hart onder de riem te steken"
             />
-            <meta name="og:image" content="https://ikklapvoor.nl/meta-images/metatag.png" />
+            <meta name="og:image" content="/images/metatag.jpg" />
             <meta name="og:url" content="https://ikklapvoor.nl/" />
             <meta name="og:site_name" content="ik klap voor" />
             <meta name="og:locale" content="nl_nl" />
             <meta name="og:type" content="website" />
+
+			<meta property="twitter:card" content="summary_large_image"/>
+			<meta property="twitter:url" content="https://ikklapvoor.nl/"/>
+			<meta property="twitter:title" content="Ik klap voor..."/>
+			<meta property="twitter:description" content="Klap voor de helden van Corona of plaats een bericht om zo de mensen die elke dag hun ding doen een hart onder de riem te steken"/>
+			<meta property="twitter:image" content="/images/metatag.jpg"/>
+
 
             <script type="application/ld+json">
                 {`

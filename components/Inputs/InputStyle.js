@@ -21,7 +21,7 @@ const InputStyle = props => {
         outline: none;
         display: inline-block;
 
-        margin: 1rem auto;
+        margin: .5rem auto;
         padding: 1rem;
 
         z-index: 1;

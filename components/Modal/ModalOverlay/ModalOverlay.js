@@ -15,21 +15,7 @@ export const ModalOverlayContextProvider = props => {
     const [applausAmount, setApplausAmount] = useState(0);
 	const [options, setOptions] = useState(undefined)
 	const [messages, setMessages] = useState(0)
-	// const db = firebase.firestore();
-	// const applauseData = db.collection('applaus').get().then(snapshot => {
-	// 	const optionArray = []
-	// 	snapshot.forEach(doc => {
-	// 		const docData = doc.data();
-	// 		const obj = {
-	// 			value: doc.id,
-	// 			label: docData.name
-	// 		}
-	// 		optionArray.push(obj);
-	// 	});
-	// 	return optionArray
-	// });
-	// console.log(applauseData);
-	// return applauseData
+	const [clapData, setClapData] = useState(undefined);
 
 	useEffect( () => {
 		const db = firebase.firestore()
@@ -37,6 +23,8 @@ export const ModalOverlayContextProvider = props => {
 		applauseData.then( snapshot => {
 			const values = []
 			const optionArray = []
+			const fullClapData = [];
+
 			snapshot.forEach((doc) => {
 				const docData = doc.data()
 				const obj = {
@@ -45,12 +33,15 @@ export const ModalOverlayContextProvider = props => {
 				}
 				optionArray.push(obj);
 				values.push(docData.number)
+				fullClapData.push(docData);
 			});
 
 			// const iedereen = db.collection('applaus').doc('iedereen')
+			const sortedClapData = fullClapData.sort((a, b)=>b.number - a.number)
 			const reducer = (accumulator, currentValue) => accumulator + currentValue;
 			setApplausAmount(values.reduce(reducer))
 			setOptions(optionArray)
+			setClapData(sortedClapData);
 		})
 
 		const messageData = db.collection('berichten').get();
@@ -91,7 +82,8 @@ export const ModalOverlayContextProvider = props => {
 		});
 		}, [modalOpenState, applausAmount] )
 
-	return (
+
+return (
         <ModalOverlayContext.Provider
             value={{
                 isOpen: modalOpenState,
@@ -102,6 +94,10 @@ export const ModalOverlayContextProvider = props => {
                 stateChangeHandler: newState => {
                     setModalOpenState(newState);
                     document.body.classList.toggle('has-overlay');
+					if(newState === true) {
+						const audio = new Audio('/sounds/message.mp3');
+						audio.play();
+					}
 					if(newState === false) Router.push('/alle-steun')
 				},
 				updateApplausAmount: newState => {
@@ -109,7 +105,8 @@ export const ModalOverlayContextProvider = props => {
 				},
 				applausAmount: applausAmount,
 				options: options,
-				messageAmount: messages.length
+				messageAmount: messages.length,
+				clapData: clapData
             }}
         >
             {props.children}

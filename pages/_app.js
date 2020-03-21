@@ -31,6 +31,7 @@ class MyApp extends App {
                             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
                                 sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
                             box-sizing: border-box;
+                            text-rendering: optimizeLegibility;
                         }
 
                         body {
@@ -40,15 +41,15 @@ class MyApp extends App {
                             height: 100%;
                         }
 
-                        body,
-                        #__next,
-                        main {
-                            min-height: calc(100vh - 4rem + 1px);
-                        }
+                        // body,
+                        // #__next,
+                        // main {
+                        //     min-height: calc(100vh - 4rem + 1px);
+                        // }
 
-                        header + * {
-                            margin-top: 4rem;
-                        }
+                        // header + * {
+                        //     margin-top: 4rem;
+                        // }
                     `}
                 />
                 <ModalOverlayContextProvider>

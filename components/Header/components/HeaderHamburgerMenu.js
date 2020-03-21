@@ -3,7 +3,7 @@ import HamburgerIcon from '../../../public/icons/Hamburger';
 import styled from '@emotion/styled';
 import useKeyPress from '../../../utils/useKeypress';
 import { AnimatePresence, motion } from 'framer-motion';
-import { theme } from '../../../styles/global';
+import { mq, theme } from '../../../styles/global';
 import { css } from '@emotion/core';
 import Link from 'next/link';
 import { HeaderLanguageSelector } from '../_Components';
@@ -106,7 +106,7 @@ const HeaderHamburgerMenu = props => {
     ];
 
     const StyledLink = styled(motion.li)`
-        font-size: calc(1rem + 1vh);
+        font-size: 1.25rem;
         white-space: nowrap;
         font-weight: bold;
         margin-bottom: calc(1.5rem + 5%);
@@ -114,6 +114,10 @@ const HeaderHamburgerMenu = props => {
         position:relative;
         display: inline-block;
         width: fit-content;
+
+        @media ${mq.min.medium}{
+			font-size: calc(1rem + 1vh);;
+        }
 
         &::first-letter {
             text-transform: capitalize;

@@ -19,12 +19,11 @@ const ApplaudPage = () => {
 			<motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
 				<main>
 					<ContentWrapper variants={textVariants}>
-						<BigText initial="exit" animate="enter" exit="exit" variants={textVariants}>
+						<BigText initial="exit" animate="enter" exit="exit" variants={textVariants} css={css`p {font-size: 1.875rem;}`}>
 							<div>
 								<p>In de <strong>bizarre</strong> tijd van de Corona epidemie is het <strong>lastig</strong> om een steentje bij te dragen, buiten thuis blijven natuurlijk. Wij willen <strong>steun betuigingen</strong> digitaal vereeuwigen, hopende dat iedere held de verdiende waardering voelt!</p>
 								<footer>Deze website is opgezet door <br/>
-								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a> en <br/>
-								<a href="https://level30wizards.com"><strong>🧙‍️Level30wizards.</strong></a></footer>
+								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a> en <a href="https://level30wizards.com"><strong>🧙‍️Level30Wizards.</strong></a></footer>
 							</div>
 						</BigText>
 						<BottomPosition>
@@ -36,11 +35,11 @@ const ApplaudPage = () => {
                                         margin-bottom: 1rem;
                                     `}
 									key={1}
-									to={'/'}
+									to={'/applaus-voor'}
 								>
 									Applaudisseer
 								</Button>
-								<Button key={2} icon={'💌'}>
+								<Button key={2} icon={'💌'} to={'/speciaal-bericht'}>
 									Stuur een bericht
 								</Button>
 							</ButtonHolder>

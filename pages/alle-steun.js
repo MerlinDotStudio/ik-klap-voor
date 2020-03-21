@@ -13,7 +13,7 @@ import {
     textVariants,
 } from './index';
 import Select from 'react-select';
-import { theme } from '../styles/global';
+import { mq, theme } from '../styles/global';
 import Link from 'next/link';
 import ClapModal from '../components/Modal/ClapModal';
 import styled from '@emotion/styled';
@@ -35,8 +35,9 @@ import {
 import { InView, useInView } from 'react-intersection-observer';
 
 const Messages = styled(motion.ul)`
-    padding: 0;
-    margin: 0;
+    padding: 0 7.5% 5%;
+    margin: 0 auto;
+
     li {
         list-style-type: none;
         padding: 1rem;
@@ -45,7 +46,7 @@ const Messages = styled(motion.ul)`
         box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.16);
         margin-bottom: 1rem;
         .title {
-            font-size: calc(1.25rem + 1vh);
+            font-size: 1.25rem;
             color: #80d0c7;
             margin: 0.5rem 0 1rem;
 
@@ -60,6 +61,17 @@ const Messages = styled(motion.ul)`
         footer {
             color: #333;
             font-size: 0.9375rem;
+        }
+    }
+
+    @media ${mq.min.medium} {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100vw;
+
+        li {
+            margin-bottom: 0;
         }
     }
 `;
@@ -166,10 +178,10 @@ const AllSupport = () => {
     function getSearchResults(startAmount, maxAmount) {
         const fuse = new Fuse(messages, searchOptions);
         const workFieldTypes = searchValue ? fuse.search(searchValue) : messages;
-		if(workFieldTypes && workFieldTypes.length){
-			workFieldTypes.splice(maxAmount, workFieldTypes.length);
-			workFieldTypes.splice(0, startAmount);
-		}
+        if (workFieldTypes && workFieldTypes.length) {
+            workFieldTypes.splice(maxAmount, workFieldTypes.length);
+            workFieldTypes.splice(0, startAmount);
+        }
         return (
             <Messages variants={textVariants}>
                 {workFieldTypes && workFieldTypes.length ? (
@@ -215,19 +227,22 @@ const AllSupport = () => {
         );
     }
 
-	function lazyLoadElements(min, max){
-		return messages.length >= min ? (
-			<InView>
-				{({ inView, ref, entry }) => (
-					<div ref={ref} css={css`min-height: 5rem;`}>
-						<Suspense fallback={<div>Momentje...</div>}>
-							{inView && getSearchResults(min, max)}
-						</Suspense>
-					</div>
-				)}
-			</InView>
-		) : null
-	}
+    function lazyLoadElements(min, max) {
+        return messages.length >= min ? (
+            <InView>
+                {({ inView, ref, entry }) => (
+                    <div
+                        ref={ref}
+                        css={css`
+                            min-height: 5rem;
+                        `}
+                    >
+                        <Suspense fallback={<div>Momentje...</div>}>{inView && getSearchResults(min, max)}</Suspense>
+                    </div>
+                )}
+            </InView>
+        ) : null;
+    }
 
     return (
         <BlueGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
@@ -238,14 +253,45 @@ const AllSupport = () => {
                         variants={textVariants}
                         css={css`
                             align-content: flex-start;
+                            padding-bottom: 0;
+                            min-height: unset;
+
+                            @media ${mq.min.medium}{
+								justify-content: flex-start;
+								align-items: flex-start;
+								flex-flow: column wrap;
+								max-width: unset;
+
+								> * {
+									max-width: 20rem;
+									margin-left: 0;
+								}
+                            }
                         `}
                     >
-                        <BigText variants={textVariants}>
+                        <BigText
+                            variants={textVariants}
+                            css={css`
+                                margin-bottom: 3rem;
+
+                                p {
+                                    margin: 0;
+                                }
+
+                                @media ${mq.min.medium}{
+									max-width: unset !important;
+
+									br:last-of-type {
+										display: none;
+									}
+	                            }
+                            `}
+                        >
                             <div>
                                 <p>
                                     Er is al <strong>{data.applaud} keer</strong> 👏 geapplaudisseerd, voor{' '}
-                                    <strong>{data.beroepen}</strong> verschillende beroeps groepen! De meest benoemde
-                                    groep is: <strong>{data.meesteBeroep}</strong>!
+                                    <strong>{data.beroepen}</strong> verschillende beroeps groepen! <br/>De meest benoemde
+                                    groep is: <br/><strong>{data.meesteBeroep}</strong>!
                                 </p>
                             </div>
                         </BigText>
@@ -313,13 +359,13 @@ const AllSupport = () => {
                         <motion.div
                             variants={textVariants}
                             css={css`
-                                margin: 4rem 0 2rem;
+                                margin: 2rem 0 2rem;
                             `}
                         >
                             <span
                                 css={css`
                                     color: white;
-                                    margin-bottom: .25rem;
+                                    margin-bottom: 0.25rem;
                                     display: inline-block;
                                 `}
                             >
@@ -355,32 +401,17 @@ const AllSupport = () => {
                                 onChange={e => (e && e.value ? setSearchValue(e.value) : setSearchValue(null))}
                             />
                         </motion.div>
-						{
-							typeof window !== 'undefined' ? (
-								<Suspense fallback={<div>Momentje...</div>}>
-									{getSearchResults(0, 32)}
-								</Suspense>
-							) : null
-						}
-						{
-							lazyLoadElements(32, 64)
-						}
-						{
-							lazyLoadElements(64, 96)
-						}
-						{
-							lazyLoadElements(96, 128)
-						}
-						{
-							lazyLoadElements(128, 160)
-						}
-						{
-							lazyLoadElements(160, 192)
-						}
-						{
-							lazyLoadElements(192, 224)
-						}
                     </ContentWrapper>
+
+                    {typeof window !== 'undefined' ? (
+                        <Suspense fallback={<div>Momentje...</div>}>{getSearchResults(0, 32)}</Suspense>
+                    ) : null}
+                    {lazyLoadElements(32, 64)}
+                    {lazyLoadElements(64, 96)}
+                    {lazyLoadElements(96, 128)}
+                    {lazyLoadElements(128, 160)}
+                    {lazyLoadElements(160, 192)}
+                    {lazyLoadElements(192, 224)}
                 </main>
             </motion.div>
             <ClapModal />

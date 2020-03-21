@@ -33,7 +33,7 @@ const ClapModal = () => (
             <BigText
                 variants={textVariants}
                 css={css`
-                    font-size: 6.25rem;
+                    font-size: 5.25rem;
                 `}
             >
                 👏 +1

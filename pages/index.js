@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import Header from '../components/Header/Header';
-import { theme } from '../styles/global';
+import { mq, theme } from '../styles/global';
 import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
@@ -79,10 +79,12 @@ export const BlueGradientBackground = styled(motion.div)`
     position: fixed;
     z-index: 0;
     width: 100%;
-    height: 100%;
+	height: 100%;
     left: 0;
     top: 0;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-height: calc(100vh + 1px);
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -129,10 +131,12 @@ export const BlackGradientBackground = styled(motion.div)`
     position: fixed;
     z-index: 0;
     width: 100%;
-    height: 100%;
+	height: 100%;
     left: 0;
     top: 0;
     overflow-y: auto;
+    overflow-x: hidden;
+    min-height: calc(100vh + 1px);
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -183,15 +187,20 @@ export const defaultHeaderProps = {
 };
 
 export const BigText = styled(motion.div)`
-    font-size: calc(1.875rem + 1vh);
+    font-size: calc(1.875rem);
     color: white;
     max-width: 40rem;
-    margin: 2rem auto;
+    margin: 2rem auto -;
+
+    @media ${mq.min.medium}{
+    	font-size: calc(1.875rem + 1.5vh);
+    }
+
     strong {
         font-weight: bold;
     }
     p {
-        margin: 0 auto calc(1.875rem + 1vh);
+        margin: 0 auto calc(1.875rem);
     }
     a {
         color: white;
@@ -199,20 +208,22 @@ export const BigText = styled(motion.div)`
         border-bottom: 1px solid white;
     }
     footer {
-        font-size: calc(1.5rem + 1vh);
+    	text-align: center;
+        font-size: calc(1.25rem);
+        margin-bottom: 1rem;
     }
 `;
 
 export const ContentWrapper = styled(motion.article)`
     margin: 0 auto;
-    padding: 5% 10%;
+    padding: 5% 7.5%;
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
     justify-content: center;
     width: 100%;
-    min-height: calc(100vh - 4rem);
 	max-width: calc(40rem + 20%);
+	min-height: 80vh;
 
     > * {
     	width: 100%;
@@ -221,8 +232,8 @@ export const ContentWrapper = styled(motion.article)`
 `;
 
 export const ButtonHolder = styled(motion.div)`
-    width: fit-content;
-    margin: 1rem auto;
+    margin: .5rem auto;
+    width: 100%;
 `;
 
 export const BottomPosition = styled(motion.div)`

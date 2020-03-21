@@ -11,9 +11,6 @@ const Header = props => {
 	const { icon, hasAmount, amount } = props
     const Header = styled.header`
         border-radius: 0 0 .5rem .5rem;
-        position: fixed;
-        top: 0;
-        left: 0;
         width: 100vw;
         z-index: 2;
 
@@ -38,8 +35,9 @@ const Header = props => {
     const LogoTitle = styled.h1`
         position: relative;
         margin: 0;
-        font-size: calc(3.125rem + 1vh);
+        font-size: 3.125rem;
         top: 1rem;
+        left: 1rem;
     `;
 
     const Nav = styled.nav`

@@ -74,7 +74,7 @@ const SpecialMessage = () => {
                                         boxShadow: 'inset 0 1px 3px 0 rgba(15,31,44,0.1)',
                                         borderRadius: '8px',
                                         border: `1px solid ${theme.colors.white}`,
-                                        margin: '1rem 0',
+                                        margin: '.5rem 0',
                                     }),
                                 }}
                                 onChange={e =>
@@ -107,7 +107,7 @@ const SpecialMessage = () => {
                                     css={css`
                                         position: absolute;
                                         bottom: 1.45rem;
-                                        right: 0.25rem;
+                                        right: 0.75rem;
                                         font-size: 0.825rem;
                                         color: ${textLength < 8 ? theme.colors.statusRed : '#333'};
                                     `}

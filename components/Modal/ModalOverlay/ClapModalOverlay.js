@@ -23,6 +23,10 @@ export const ClapModalOverlayContextProvider = props => {
                 stateChangeHandler: newState => {
                     setModalOpenState(newState);
                     document.body.classList.toggle('has-overlay');
+					if(newState === true) {
+						const audio = new Audio('/sounds/clapping.mp3');
+						audio.play();
+					}
 					if(newState === false) Router.push('/alle-steun')
                 },
             }}
