@@ -29,7 +29,7 @@ const ApplaudModal = () => (
                 }
             `}
         >
-            <BigText variants={textVariants}>Dank voor je applaus!</BigText>
+            <BigText variants={textVariants}>Dank voor je bericht!</BigText>
             <BigText
                 variants={textVariants}
                 css={css`

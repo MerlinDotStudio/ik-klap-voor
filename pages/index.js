@@ -85,6 +85,7 @@ export const BlueGradientBackground = styled(motion.div)`
     overflow-y: auto;
     overflow-x: hidden;
     min-height: calc(100vh + 1px);
+    padding-bottom: 4rem;
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -137,6 +138,7 @@ export const BlackGradientBackground = styled(motion.div)`
     overflow-y: auto;
     overflow-x: hidden;
     min-height: calc(100vh + 1px);
+    padding-bottom: 4rem;
     &::-webkit-scrollbar {
         width: 8px;
         height: 8px;

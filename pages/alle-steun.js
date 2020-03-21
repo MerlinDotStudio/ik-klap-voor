@@ -299,7 +299,10 @@ const AllSupport = () => {
                             <Button key={2} icon={'👏'} to={'/applaus-voor'}>
                                 Applaudisseer
                             </Button>
-                            <motion.ul
+							<Button key={3} icon={'💌'} to={'/speciaal-bericht'} styles={css`margin: .5rem 0;`}>
+								Stuur een bericht
+							</Button>
+							<motion.ul
                                 variants={textVariants}
                                 css={css`
                                     display: flex;
