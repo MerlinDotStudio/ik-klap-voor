@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { css } from '@emotion/core';
 import { motion } from 'framer-motion';
 import {
-	BigText, BlackGradientBackground,
+	BigText, BlackGradientBackground, BlueGradientBackground,
 	BottomPosition,
 	ButtonHolder,
 	ContentWrapper,
@@ -15,7 +15,7 @@ import {
 const ApplaudPage = () => {
     return (
 		<BlackGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
-			<Header {...defaultHeaderProps} />
+			<Header {...defaultHeaderProps} icon={'️🤷‍♂️'} />
 			<motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
 				<main>
 					<ContentWrapper variants={textVariants}>

@@ -43,7 +43,7 @@ const ApplaudPage = () => {
 
 	return (
 		<BlackGradientBackground invert initial="exit" animate="enter" exit="exit" variants={fade}>
-			<Header {...defaultHeaderProps} />
+			<Header {...defaultHeaderProps} icon={'💡'} />
 			<motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
 				<main>
 					<ContentWrapper variants={textVariants}>

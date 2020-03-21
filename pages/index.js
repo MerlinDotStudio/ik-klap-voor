@@ -296,7 +296,7 @@ const HomePage = () => {
 
     return (
         <BlueGradientBackground initial="exit" animate="enter" exit="exit" variants={fade}>
-            <Header hasAmount={true} amount={useModalOverlayContext.applausAmount} {...defaultHeaderProps} />
+            <Header hasAmount={true} icon={'👏'} amount={useModalOverlayContext.applausAmount} {...defaultHeaderProps} />
             <motion.div initial="exit" animate="enter" exit="exit" variants={textVariants}>
                 <main>
                     <ContentWrapper variants={textVariants}>
