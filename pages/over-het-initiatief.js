@@ -22,8 +22,12 @@ const ApplaudPage = () => {
 						<BigText initial="exit" animate="enter" exit="exit" variants={textVariants} css={css`p {font-size: 1.875rem;}`}>
 							<div>
 								<p>In de <strong>bizarre</strong> tijd van de Corona epidemie is het <strong>lastig</strong> om een steentje bij te dragen, buiten thuis blijven natuurlijk. Wij willen <strong>steun betuigingen</strong> digitaal vereeuwigen, hopende dat iedere held de verdiende waardering voelt!</p>
-								<footer>Deze website is opgezet door <br/>
-								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a> en <a href="https://level30wizards.com"><strong>🧙‍️Level30Wizards.</strong></a></footer>
+								<footer>
+								<small>Ontwerp & Concept door: </small>
+								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a>
+									<br/>
+								<small>Ontwikkeling door: </small>
+								<a href="https://level30wizards.com"><strong>🧙‍️Level30Wizards.</strong></a></footer>
 							</div>
 						</BigText>
 						<BottomPosition>
