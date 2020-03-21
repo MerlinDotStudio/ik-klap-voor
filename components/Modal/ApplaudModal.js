@@ -55,7 +55,6 @@ const ApplaudModal = () => (
                 <li>
                     <FacebookShareButton
                         url={'https://ikklapvoor.nl'}
-                        hashtag={'covid19, corona, nederland'}
                         quote={
                             'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
                         }
