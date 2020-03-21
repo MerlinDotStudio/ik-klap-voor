@@ -27,7 +27,7 @@ export const StyledForm = styled(motion.form)`
 `;
 
 const Messages = styled(motion.ul)`
-    padding: 0 7.5% 5%;
+    padding: 0 7.5% 4rem;
     margin: 3rem auto 0;
 
     li {
@@ -56,6 +56,7 @@ const Messages = styled(motion.ul)`
         .text {
             font-size: 1.125rem;
             font-weight: bold;
+            margin-top: .5rem;
         }
 
     }
