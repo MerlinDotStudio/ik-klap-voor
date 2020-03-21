@@ -25,7 +25,7 @@ const ApplaudPage = () => {
 								<footer>
 								<small>Ontwerp & Concept door: </small>
 								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a>
-									<br/>
+								<br/>
 								<small>Ontwikkeling door: </small>
 								<a href="https://level30wizards.com"><strong>🧙‍️Level30Wizards.</strong></a></footer>
 							</div>
