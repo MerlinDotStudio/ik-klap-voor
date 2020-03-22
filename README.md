@@ -1,3 +1,7 @@
+Do you want to contribute? \
+Please email Mees for the next.config.js file. \
+[Email Mees](mees@level30wizards.com)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
