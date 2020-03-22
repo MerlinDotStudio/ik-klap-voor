@@ -305,6 +305,8 @@ const HomePage = () => {
                                 <p>
                                     Geef <strong>steun</strong> aan de eerste linie <strong>Coronabestrijders</strong>{' '}
                                     en de <strong>andere helden</strong> die ons land draaiende houden.
+									<br/>
+									<small>p.s Wil je echt <strong>helpen</strong> blijf thuis ❤️ #StaySafeStayHome</small>
                                 </p>
                             </div>
                         </BigText>
