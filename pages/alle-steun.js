@@ -355,7 +355,7 @@ const AllSupport = () => {
                                     <TwitterShareButton
                                         url={'https://ikklapvoor.nl'}
                                         title={
-                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook?'
+                                            'Laten we iedereen die momenteel vecht voor anderen een hart onder de riem steken. Ik heb geklapt voor mijn helden die vechten tegen corona, jij ook? #applausvooronzehelden #lockdownnl #blijfthuis #coronanederland'
                                         }
                                     >
                                         <TwitterIcon size={32} round={true} />

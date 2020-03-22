@@ -69,7 +69,7 @@ export default props => {
 					"@context": "https://schema.org/",
 					"@type": "WebSite",
 					"name": "ik klap voor",
-					"url": "https://ikklapvoor.nl/",
+					"url": "https://ikklapvoor.nl/"
 				}
 			`}
             </script>
