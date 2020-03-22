@@ -290,7 +290,7 @@ const AllSupport = () => {
                             <div>
                                 <p>
                                     Er is al <strong>{data.applaud} keer</strong> 👏 geapplaudisseerd, voor{' '}
-                                    <strong>{data.beroepen}</strong> verschillende beroeps groepen! <br/>De meest benoemde
+                                    <strong>{data.beroepen}</strong> verschillende beroepsgroepen! <br/>De meest benoemde
                                     groep is: <br/><strong>{data.meesteBeroep}</strong>!
                                 </p>
                             </div>

@@ -303,8 +303,8 @@ const HomePage = () => {
                         <BigText variants={textVariants}>
                             <div>
                                 <p>
-                                    Geef <strong>steun</strong> aan de eerste linie <strong>Corona bestrijders</strong>{' '}
-                                    en de <strong>andere helden</strong> die ons land draaiend houden.
+                                    Geef <strong>steun</strong> aan de eerste linie <strong>Coronabestrijders</strong>{' '}
+                                    en de <strong>andere helden</strong> die ons land draaiende houden.
                                 </p>
                             </div>
                         </BigText>
