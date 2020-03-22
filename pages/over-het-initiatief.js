@@ -21,7 +21,7 @@ const ApplaudPage = () => {
 					<ContentWrapper variants={textVariants}>
 						<BigText initial="exit" animate="enter" exit="exit" variants={textVariants} css={css`p {font-size: 1.875rem;}`}>
 							<div>
-								<p>In de <strong>bizarre</strong> tijd van de Corona epidemie is het <strong>lastig</strong> om een steentje bij te dragen, buiten thuis blijven natuurlijk. Wij willen <strong>steun betuigingen</strong> digitaal vereeuwigen, hopende dat iedere held de verdiende waardering voelt!</p>
+								<p>In de <strong>bizarre</strong> tijd van de Corona epidemie is het <strong>lastig</strong> om een steentje bij te dragen, buiten thuis blijven natuurlijk. Wij willen <strong>steunbetuigingen</strong> digitaal vereeuwigen, hopende dat iedere held de verdiende waardering voelt!</p>
 								<footer>
 								<small>Ontwerp & Concept door: </small>
 								<a href="https://the-pack.nl"><strong>🐺The Pack</strong></a>
