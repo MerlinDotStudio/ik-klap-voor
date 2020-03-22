@@ -256,16 +256,16 @@ const AllSupport = () => {
                             padding-bottom: 0;
                             min-height: unset;
 
-                            @media ${mq.min.medium}{
-								justify-content: flex-start;
-								align-items: flex-start;
-								flex-flow: column wrap;
-								max-width: unset;
+                            @media ${mq.min.medium} {
+                                justify-content: flex-start;
+                                align-items: flex-start;
+                                flex-flow: column wrap;
+                                max-width: unset;
 
-								> * {
-									max-width: 20rem;
-									margin-left: 0;
-								}
+                                > * {
+                                    max-width: 20rem;
+                                    margin-left: 0;
+                                }
                             }
                         `}
                     >
@@ -278,31 +278,46 @@ const AllSupport = () => {
                                     margin: 0;
                                 }
 
-                                @media ${mq.min.medium}{
-									max-width: unset !important;
+                                @media ${mq.min.medium} {
+                                    max-width: unset !important;
 
-									br:last-of-type {
-										display: none;
-									}
-	                            }
+                                    br:last-of-type {
+                                        display: none;
+                                    }
+                                }
                             `}
                         >
                             <div>
                                 <p>
                                     Er is al <strong>{data.applaud} keer</strong> 👏 geapplaudisseerd, voor{' '}
-                                    <strong>{data.beroepen}</strong> verschillende beroepsgroepen! <br/>De meest benoemde
-                                    groep is: <br/><strong>{data.meesteBeroep}</strong>!
+                                    <strong>{data.beroepen}</strong> verschillende beroepsgroepen! <br />
+                                    De meest benoemde groep is: <br />
+                                    <strong>{data.meesteBeroep}</strong>!
                                 </p>
                             </div>
                         </BigText>
-                        <ButtonHolder variants={textVariants}>
+                        <ButtonHolder
+                            variants={textVariants}
+                            css={css`
+                                @media ${mq.min.medium} {
+                                    margin: .5rem auto .5rem 0 !important;
+                                }
+                            `}
+                        >
                             <Button key={2} icon={'👏'} to={'/applaus-voor'}>
                                 Applaudisseer
                             </Button>
-							<Button key={3} icon={'💌'} to={'/speciaal-bericht'} styles={css`margin: .5rem 0;`}>
-								Stuur een bericht
-							</Button>
-							<motion.ul
+                            <Button
+                                key={3}
+                                icon={'💌'}
+                                to={'/speciaal-bericht'}
+                                styles={css`
+                                    margin: 0.5rem 0;
+                                `}
+                            >
+                                Stuur een bericht
+                            </Button>
+                            <motion.ul
                                 variants={textVariants}
                                 css={css`
                                     display: flex;
